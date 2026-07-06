@@ -3,6 +3,8 @@ package com.example.dodast.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cities")
 @Getter
@@ -17,5 +19,12 @@ public class City {
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
+
+    @OneToMany(mappedBy = "city")
+    private List<Advertisement> advertisements;
 
 }

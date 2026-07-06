@@ -18,4 +18,8 @@ public class AdvertisementImage {
 
     private String imageUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "advertisement_id")
+    private Advertisement advertisement;
+
 }

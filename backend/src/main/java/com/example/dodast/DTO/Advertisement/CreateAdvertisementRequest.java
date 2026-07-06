@@ -10,6 +10,8 @@ public class CreateAdvertisementRequest {
 
     private Long categoryId;
 
+    private Long provinceId;
+
     private Long cityId;
 
     public CreateAdvertisementRequest() {
@@ -31,6 +33,10 @@ public class CreateAdvertisementRequest {
         return categoryId;
     }
 
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
     public Long getCityId() {
         return cityId;
     }
@@ -49,6 +55,10 @@ public class CreateAdvertisementRequest {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
     }
 
     public void setCityId(Long cityId) {

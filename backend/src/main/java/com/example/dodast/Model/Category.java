@@ -3,6 +3,8 @@ package com.example.dodast.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "categories")
 @Getter
@@ -17,5 +19,8 @@ public class Category {
     private Long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Advertisement> advertisements;
 
 }
