@@ -12,6 +12,8 @@ public class UpdateAdvertisementRequest {
 
     private Long cityId;
 
+    private Long provinceId;
+
     public UpdateAdvertisementRequest() {
     }
 
@@ -35,6 +37,10 @@ public class UpdateAdvertisementRequest {
         return cityId;
     }
 
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -53,6 +59,10 @@ public class UpdateAdvertisementRequest {
 
     public void setCityId(Long cityId) {
         this.cityId = cityId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
     }
 
 }

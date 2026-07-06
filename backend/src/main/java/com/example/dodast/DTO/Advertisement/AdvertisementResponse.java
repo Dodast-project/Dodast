@@ -1,5 +1,7 @@
 package com.example.dodast.DTO.Advertisement;
 
+import com.example.dodast.Model.Enums.AdvertisementStatus;
+
 public class AdvertisementResponse {
 
     private Long id;
@@ -10,15 +12,19 @@ public class AdvertisementResponse {
 
     private String city;
 
+    private AdvertisementStatus status;
+
     public AdvertisementResponse(Long id,
                                  String title,
                                  Long price,
-                                 String city) {
+                                 String city,
+                                 AdvertisementStatus status) {
 
         this.id = id;
         this.title = title;
         this.price = price;
         this.city = city;
+        this.status = status;
     }
 
     public Long getId() {
@@ -37,4 +43,7 @@ public class AdvertisementResponse {
         return city;
     }
 
+    public AdvertisementStatus getStatus() {
+        return status;
+    }
 }
