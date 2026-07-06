@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/advertisements")
@@ -23,7 +24,7 @@ public class AdvertisementController {
 
     @PostMapping
     public AdvertisementResponse createAdvertisement(
-            @RequestBody CreateAdvertisementRequest request) {
+            @Valid @RequestBody CreateAdvertisementRequest request) {
 
         return advertisementService.createAdvertisement(request);
     }
@@ -31,7 +32,7 @@ public class AdvertisementController {
     @PutMapping("/{id}")
     public AdvertisementResponse updateAdvertisement(
             @PathVariable Long id,
-            @RequestBody UpdateAdvertisementRequest request) {
+            @Valid @RequestBody UpdateAdvertisementRequest request) {
 
         return advertisementService.updateAdvertisement(id, request);
     }

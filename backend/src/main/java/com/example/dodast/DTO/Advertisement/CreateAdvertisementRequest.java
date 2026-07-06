@@ -1,17 +1,31 @@
 package com.example.dodast.DTO.Advertisement;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 public class CreateAdvertisementRequest {
 
+    @NotBlank
+    @Size(max = 100)
     private String title;
 
+    @NotBlank
+    @Size(max = 3000)
     private String description;
 
+    @NotNull
+    @Positive
     private Long price;
 
+    @NotNull
     private Long categoryId;
 
+    @NotNull
     private Long provinceId;
 
+    @NotNull
     private Long cityId;
 
     public CreateAdvertisementRequest() {
