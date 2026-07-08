@@ -3,7 +3,6 @@ package com.example.dodast.Service;
 import com.example.dodast.Repository.*;
 import lombok.RequiredArgsConstructor;
 
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
@@ -12,12 +11,10 @@ import com.example.dodast.Model.*;
 import com.example.dodast.Model.Enums.AdvertisementStatus;
 import com.example.dodast.Exception.ProvinceNotFoundException;
 import com.example.dodast.Exception.CityNotFoundException;
-
 import com.example.dodast.Exception.CityProvinceNotMatchException;
 import com.example.dodast.Exception.CategoryNotFoundException;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
 import com.example.dodast.Exception.AdvertisementAccessDeniedException;
-
 import com.example.dodast.Exception.AdvertisementNotFoundException;
 
 @Service
