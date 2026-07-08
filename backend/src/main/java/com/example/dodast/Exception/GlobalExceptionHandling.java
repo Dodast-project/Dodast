@@ -39,7 +39,7 @@ public class GlobalExceptionHandling{
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleException(Exception e){
-        ApiErrorResponse response = new ApiErrorResponse("unexpected error occured", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        ApiErrorResponse response = new ApiErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }   
