@@ -13,15 +13,18 @@ import com.example.dodast.Exception.UserNotFoundException;
 import com.example.dodast.Model.User;
 import com.example.dodast.Model.Enums.Role;
 import com.example.dodast.Repository.UserRepository;
+import com.example.dodast.Security.JwtService;
 
 @Service
 public class AuthService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public AuthResponse register(RegisterRequest request){
@@ -37,7 +40,9 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
 
-        return new AuthResponse("Register successful", savedUser.getId(), savedUser.getUsername(), savedUser.getRole());
+        String token = jwtService.generateToken(savedUser.getId(), savedUser.getUsername(), savedUser.getRole());
+
+        return new AuthResponse("Register successful", savedUser.getId(), savedUser.getUsername(), savedUser.getRole(), token);
     }
 
     public AuthResponse login(LoginRequest request){
@@ -46,7 +51,9 @@ public class AuthService {
 
         if(!passwordEncoder.matches(request.getPassword(), user.getHashedPassword())) throw new InvalidPasswordException();
 
-        return new AuthResponse("Login successful", user.getId(), user.getUsername(), user.getRole());
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole());
+
+        return new AuthResponse("Login successful", user.getId(), user.getUsername(), user.getRole(), token);
     }
 
 
