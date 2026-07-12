@@ -20,7 +20,10 @@ public class Province {
 
     private String name;
 
-    @OneToMany(mappedBy = "province")
+    @OneToMany(
+        mappedBy = "province",
+        fetch = FetchType.LAZY
+    )
     private List<City> cities;
 
 }
