@@ -23,6 +23,10 @@ public class AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
     private final CategoryRepository categoryRepository;
+    private final CityRepository cityRepository;
+    private final ProvinceRepository provinceRepository;
+
+    public AdvertisementResponse createAdvertisement(CreateAdvertisementRequest request) {
 
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(CategoryNotFoundException::new);
