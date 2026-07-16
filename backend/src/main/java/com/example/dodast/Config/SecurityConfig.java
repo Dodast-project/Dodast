@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/advertisements/pending").hasRole("ADMIN")
+                        .requestMatchers("/advertisements/*/approve", "/advertisements/*/reject").hasRole("ADMIN")
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/advertisements/**").permitAll()
                         .requestMatchers("/advertisements/**").authenticated()
