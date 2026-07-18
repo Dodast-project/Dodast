@@ -22,7 +22,7 @@ public class SearchService {
         this.advertisementRepository = advertisementRepository;
     }
 
-    public List<Advertisement> search(AdSearchRequest request){
+    public List<AdvertisementResponse> search(AdSearchRequest request){
 
         List<Advertisement> ads = new ArrayList<>();
 
