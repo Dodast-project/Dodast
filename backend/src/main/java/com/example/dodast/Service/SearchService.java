@@ -1,9 +1,7 @@
 package com.example.dodast.Service;
-package com.example.dodast.Service;
 
-import com.example.dodast.DTO.AdSearchRequest;
-import com.example.dodast.DTO.AdvertisementResponse;
 import com.example.dodast.Model.Advertisement;
+import com.example.dodast.DTO.Advertisement.AdSearchRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +12,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class SearchService {
     
     private final AdvertisementRepository advertisementRepository;
@@ -23,17 +20,17 @@ public class SearchService {
         this.advertisementRepository = advertisementRepository;
     }
 
-    public List<AdvertisementResponse> search(AdSearchRequest request){
+    public List<Advertisement> search(AdSearchRequest request){
 
         List<Advertisement> ads = new ArrayList<>();
 
-        List<AdvertisementResponse> adResponses = new ArrayList<>();
+        List<Advertisement> adResponses = new ArrayList<>();
 
         
         for(Advertisement ad: ads){
 
             
-            AdvertisementResponse adResponse = new AdvertisementResponse(
+            Advertisement adResponse = new AdvertisementResponse(
                 ad.getId(),
                 ad.getTitle(),
                 ad.getPrice(),
@@ -47,7 +44,7 @@ public class SearchService {
         return adResponses;
     }
 
-    private validatePriceRange(com.example.dodast.DTO.Advertisements.AdSearchRequest request){
+    private void validatePriceRange(AdSearchRequest request){
         if(request.getMaxPrice() < request.getMinPrice()) throw new InvalidPriceRangeException();
     }
 }
