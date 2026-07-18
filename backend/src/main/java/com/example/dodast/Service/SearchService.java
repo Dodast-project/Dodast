@@ -47,7 +47,7 @@ public class SearchService {
         return adResponses;
     }
 
-    private validatePriceRange(AdSearchRequest request){
-        
+    private validatePriceRange(com.example.dodast.DTO.Advertisements.AdSearchRequest request){
+        if(request.getMaxPrice() < request.getMinPrice()) throw new InvalidPriceRangeException();
     }
 }
