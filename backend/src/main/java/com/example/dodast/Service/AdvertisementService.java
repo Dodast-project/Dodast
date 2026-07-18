@@ -3,9 +3,13 @@ package com.example.dodast.Service;
 import com.example.dodast.Repository.*;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
+import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Model.*;
 import com.example.dodast.Model.Enums.AdvertisementStatus;
@@ -142,6 +146,45 @@ public class AdvertisementService {
         advertisement.setStatus(AdvertisementStatus.SOLD);
 
         advertisementRepository.save(advertisement);
+    }
+
+    public AdvertisementDetailResponse getAdvertisementDetail(Long id){
+
+        Advertisement advertisement = advertisementRepository.findById(id)
+                .orElseThrow(AdvertisementNotFoundException::new);
+        
+        AdvertisementDetailResponse advertisementDetailResponse = new AdvertisementDetailResponse(
+                advertisement.getId(),
+                advertisement.getTitle(), 
+                advertisement.getDescription(), 
+                advertisement.getPrice(), 
+                advertisement.getCity().getName(), 
+                advertisement.getProvince().getName(), 
+                advertisement.getCategory().getName()
+        );
+
+        return advertisementDetailResponse;
+    }   
+
+    public List<AdvertisementResponse> getActiveAdvertisements(){
+
+        List<Advertisement> advertisements = advertisementRepository.findByStatus(AdvertisementStatus.ACTIVE);
+        List<AdvertisementResponse> advertisementResponses = new ArrayList<>();
+
+        for(Advertisement advertisement: advertisements){
+
+                AdvertisementResponse advertisementResponse = new AdvertisementResponse(
+                        advertisement.getId(), 
+                        advertisement.getTitle(), 
+                        advertisement.getPrice(), 
+                        advertisement.getCity().getName(), 
+                        advertisement.getStatus()
+                );
+
+                advertisementResponses.add(advertisementResponse);
+        }
+
+        return advertisementResponses;
     }
 
     private User getCurrentUser(){
