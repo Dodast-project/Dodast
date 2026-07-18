@@ -2,6 +2,8 @@ package com.example.dodast.Service;
 
 import com.example.dodast.Model.Advertisement;
 import com.example.dodast.DTO.Advertisement.AdSearchRequest;
+import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.Exception.InvalidPriceRangeException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,13 +26,13 @@ public class SearchService {
 
         List<Advertisement> ads = new ArrayList<>();
 
-        List<Advertisement> adResponses = new ArrayList<>();
+        List<AdvertisementResponse> adResponses = new ArrayList<>();
 
         
         for(Advertisement ad: ads){
 
             
-            Advertisement adResponse = new AdvertisementResponse(
+            AdvertisementResponse adResponse = new AdvertisementResponse(
                 ad.getId(),
                 ad.getTitle(),
                 ad.getPrice(),
