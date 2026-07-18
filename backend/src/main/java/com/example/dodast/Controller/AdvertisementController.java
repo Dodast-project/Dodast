@@ -4,6 +4,8 @@ import com.example.dodast.Service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/advertisements")
@@ -59,6 +66,16 @@ public class AdvertisementController {
     public void markAsSold(@PathVariable Long id) {
 
         advertisementService.markAsSold(id);
+    }
+
+    @GetMapping("/{id}")
+    public AdvertisementDetailResponse getAdvertisementDetail(@PathVariable Long id) {
+        return advertisementService.getAdvertisementDetail(id);
+    }
+    
+    @GetMapping
+    public List<AdvertisementResponse> getActiveAdvertisements(){
+        return advertisementService.getActiveAdvertisements();
     }
 
 }
