@@ -1,4 +1,4 @@
-package com.example.dodast.DTO.Advertisements;
+package com.example.dodast.DTO.Advertisement;
 
 import com.example.dodast.Model.Enums.SearchSortBy;
 
