@@ -1,6 +1,6 @@
 package com.example.dodast.DTO.Auth;
 
-import javax.management.relation.Role;
+import com.example.dodast.Model.Enums.Role;
 
 public class RegisterRequest {
     private String fullName;
