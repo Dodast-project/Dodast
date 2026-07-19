@@ -1,30 +1,48 @@
 package com.example.dodast.Service;
 
 import com.example.dodast.Model.Advertisement;
+import com.example.dodast.Model.Enums.SearchSortBy;
 import com.example.dodast.DTO.Advertisement.AdSearchRequest;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Exception.InvalidPriceRangeException;
 
 import lombok.RequiredArgsConstructor;
-
 import com.example.dodast.Repository.AdvertisementRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SearchService {
     
     private final AdvertisementRepository advertisementRepository;
-
-    public SearchService(AdvertisementRepository advertisementRepository){
+    private final SearchRankingSystem searchRankingSystem;
+    public SearchService(AdvertisementRepository advertisementRepository, SearchRankingSystem searchRankingSystem){
         this.advertisementRepository = advertisementRepository;
+        this.searchRankingSystem = searchRankingSystem;
     }
 
     public List<AdvertisementResponse> search(AdSearchRequest request){
 
-        List<Advertisement> ads = new ArrayList<>();
+        validatePriceRange(request);
+
+        String keyword = normalizeKeyword(request.getKeyword());
+
+        Sort sort = searchRankingSystem.createSort(request.getSortBy());
+
+        List<Advertisement> ads = advertisementRepository.searchAdvertisements(
+            AdvertisementStatus.ACTIVE,
+            keyword,
+            request.getCategoryId(),
+            request.getProvinceId(),
+            request.getCityId(),
+            request.getMinPrice(),
+            request.getMaxPrice(),
+            sort
+        );
 
         List<AdvertisementResponse> adResponses = new ArrayList<>();
 
@@ -47,6 +65,19 @@ public class SearchService {
     }
 
     private void validatePriceRange(AdSearchRequest request){
-        if(request.getMaxPrice() < request.getMinPrice()) throw new InvalidPriceRangeException();
+        Long minPrice = request.getMinPrice();
+        Long maxPrice = request.getMaxPrice();
+
+        if(minPrice != null 
+            && maxPrice != null 
+            && request.getMaxPrice() < request.getMinPrice()
+        ) throw new InvalidPriceRangeException();
     }
+
+    private String normalizeKeyword(String keyword){
+        if(keyword == null || keyword.isBlank()) return null;
+        return keyword.trim();
+    }
+
+    
 }
