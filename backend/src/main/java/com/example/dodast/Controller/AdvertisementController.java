@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/advertisements")
@@ -60,5 +63,11 @@ public class AdvertisementController {
 
         advertisementService.markAsSold(id);
     }
+
+    @GetMapping("/pending")
+    public List<AdvertisementResponse> getPendingAdvertisements() {
+        return advertisementService.getPendingAdvertisements();
+    }
+    
 
 }
