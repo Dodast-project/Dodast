@@ -5,6 +5,7 @@ import com.example.dodast.Model.Enums.SearchSortBy;
 import com.example.dodast.DTO.Advertisement.AdSearchRequest;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Exception.InvalidPriceRangeException;
+import com.example.dodast.Model.Enums.AdvertisementStatus;
 
 import lombok.RequiredArgsConstructor;
 import com.example.dodast.Repository.AdvertisementRepository;
