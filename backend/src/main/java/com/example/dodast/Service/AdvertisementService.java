@@ -3,7 +3,9 @@ package com.example.dodast.Service;
 import com.example.dodast.Repository.*;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
@@ -14,7 +16,6 @@ import com.example.dodast.Exception.CityNotFoundException;
 import com.example.dodast.Exception.CityProvinceNotMatchException;
 import com.example.dodast.Exception.CategoryNotFoundException;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
-import com.example.dodast.Exception.AdvertisementAccessDeniedException;
 import com.example.dodast.Exception.AdvertisementNotFoundException;
 
 @Service
@@ -39,7 +40,7 @@ public class AdvertisementService {
 
         checkCityProvinceMatch(city, province);
 
-        User owner = getCurrentUser();
+        User owner = AdAuthenticator.getCurrentUser();
 
         Advertisement advertisement = Advertisement.builder()
                 .title(request.getTitle())
@@ -80,7 +81,7 @@ public class AdvertisementService {
                 .orElseThrow(ProvinceNotFoundException::new);
 
         checkCityProvinceMatch(city, province); 
-        checkOwner(advertisement, getCurrentUser());
+        AdAuthenticator.checkOwner(advertisement,AdAuthenticator.getCurrentUser());
 
         advertisement.setTitle(request.getTitle());
         advertisement.setDescription(request.getDescription());
@@ -105,7 +106,7 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementRepository.findById(id)
                 .orElseThrow(AdvertisementNotFoundException::new);
 
-        checkOwner(advertisement, getCurrentUser());
+        AdAuthenticator.checkOwnerOrAdmin(advertisement, AdAuthenticator.getCurrentUser());
 
         advertisement.setStatus(AdvertisementStatus.DELETED);
 
@@ -137,28 +138,34 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementRepository.findById(id)
                 .orElseThrow(AdvertisementNotFoundException::new);
 
-        checkOwner(advertisement, getCurrentUser());
+        AdAuthenticator.checkOwner(advertisement, AdAuthenticator.getCurrentUser());
 
         advertisement.setStatus(AdvertisementStatus.SOLD);
 
         advertisementRepository.save(advertisement);
     }
 
-    private User getCurrentUser(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof User){
-                User user = (User) principal;
-                return user;
-        }
-        throw new IllegalStateException("Authenticated user not found");
-    }
-
     private void checkCityProvinceMatch(City city, Province province){
         if(!city.getProvince().getId().equals(province.getId())) throw new CityProvinceNotMatchException();
     }
 
-    private void checkOwner(Advertisement advertisement, User currentUser){
-        if(!advertisement.getOwner().getId().equals(currentUser.getId())) throw new AdvertisementAccessDeniedException();
+    public List<AdvertisementResponse> getPendingAdvertisements(){
+        List<Advertisement> adList = advertisementRepository.findByStatus(AdvertisementStatus.PENDING);
+        List<AdvertisementResponse> adResponseList = new ArrayList<>();
+
+        for(Advertisement ad: adList){
+                AdvertisementResponse adResponse = new AdvertisementResponse(
+                        ad.getId(), 
+                        ad.getTitle(), 
+                        ad.getPrice(), 
+                        ad.getCity().getName(), 
+                        ad.getStatus()
+                );
+
+                adResponseList.add(adResponse);
+        }
+
+        return adResponseList;
     }
 
 }
