@@ -1,14 +1,14 @@
 package com.example.dodast.Service;
 
 import com.example.dodast.Model.Advertisement;
-import com.example.dodast.Model.Enums.SearchSortBy;
+import com.example.dodast.Model.User;
 import com.example.dodast.DTO.Advertisement.AdSearchRequest;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Exception.InvalidPriceRangeException;
 import com.example.dodast.Model.Enums.AdvertisementStatus;
 
-import lombok.RequiredArgsConstructor;
 import com.example.dodast.Repository.AdvertisementRepository;
+import com.example.dodast.Repository.FavoriteRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,12 @@ public class SearchService {
     
     private final AdvertisementRepository advertisementRepository;
     private final SearchRankingSystem searchRankingSystem;
-    public SearchService(AdvertisementRepository advertisementRepository, SearchRankingSystem searchRankingSystem){
+    private final FavoriteRepository favoriteRepository; 
+
+    public SearchService(AdvertisementRepository advertisementRepository, SearchRankingSystem searchRankingSystem, FavoriteRepository favoriteRepository){
         this.advertisementRepository = advertisementRepository;
         this.searchRankingSystem = searchRankingSystem;
+        this.favoriteRepository = favoriteRepository;
     }
 
     public List<AdvertisementResponse> search(AdSearchRequest request){
@@ -57,7 +60,8 @@ public class SearchService {
                 ad.getPrice(),
                 ad.getCity().getName(),
                 ad.getStatus(),
-                getFirstImage(ad)
+                getFirstImage(ad),
+                isFavorite(ad.getId())
             );
 
             adResponses.add(adResponse);
@@ -89,6 +93,13 @@ public class SearchService {
         return advertisement.getImages()
                 .get(0)
                 .getImageUrl();
+    }
+
+    private boolean isFavorite(Long advertisementId){
+
+        User user = AdAuthenticator.getCurrentUser();
+
+        return favoriteRepository.existsByUserIdAndAdvertisementId(user.getId(), advertisementId);
     }
 
     
