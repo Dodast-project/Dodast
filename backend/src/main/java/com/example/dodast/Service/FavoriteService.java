@@ -2,9 +2,9 @@ package com.example.dodast.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.dodast.Model.Advertisement;
 import org.springframework.stereotype.Service;
-
+import com.example.dodast.Repository.AdvertisementRepository;
 import com.example.dodast.DTO.FavoriteResponse;
 import com.example.dodast.Exception.FavoriteAlreadyExistsException;
 import com.example.dodast.Repository.FavoriteRepository;
