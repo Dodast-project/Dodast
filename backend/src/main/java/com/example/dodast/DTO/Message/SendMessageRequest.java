@@ -15,7 +15,15 @@ public class SendMessageRequest {
         return advertisementId;
     }
 
+    public void setAdvertisementId(Long advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
