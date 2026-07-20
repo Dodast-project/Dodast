@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
 import com.example.dodast.DTO.Advertisement.ImageResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
@@ -29,6 +31,8 @@ public class AdvertisementService {
     private final CategoryRepository categoryRepository;
     private final CityRepository cityRepository;
     private final ProvinceRepository provinceRepository;
+    private final AdvertisementImageRepository advertisementImageRepository;
+    private final ImageService imageService;
 
     public AdvertisementResponse createAdvertisement(CreateAdvertisementRequest request) {
 
@@ -58,6 +62,19 @@ public class AdvertisementService {
 
         Advertisement savedAdvertisement = advertisementRepository.save(advertisement);
 
+        if(request.getImages() != null){
+
+                for(MultipartFile image : request.getImages()){
+
+                        String imageUrl = imageService.saveImage(image);
+
+                        AdvertisementImage advertisementImage = AdvertisementImage.builder()
+                                        .imageUrl(imageUrl)
+                                        .advertisement(savedAdvertisement)
+                                        .build();
+                        advertisementImageRepository.save(advertisementImage);
+                }
+        }
         return new AdvertisementResponse(
                 savedAdvertisement.getId(),
                 savedAdvertisement.getTitle(),
