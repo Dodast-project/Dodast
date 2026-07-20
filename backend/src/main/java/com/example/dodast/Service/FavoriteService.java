@@ -5,12 +5,12 @@ import java.util.List;
 import com.example.dodast.Model.Advertisement;
 import org.springframework.stereotype.Service;
 import com.example.dodast.Repository.AdvertisementRepository;
-import com.example.dodast.DTO.FavoriteResponse;
+import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
+import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Exception.FavoriteAlreadyExistsException;
 import com.example.dodast.Repository.FavoriteRepository;
 import com.example.dodast.Model.Favorite;
 import com.example.dodast.Model.User;
-import com.example.dodast.Service.AdAuthenticator;
 import com.example.dodast.Exception.AdvertisementNotFoundException;
 import com.example.dodast.Exception.FavoriteNotFoundException;
 
@@ -47,7 +47,7 @@ public class FavoriteService {
 
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(AdvertisementNotFoundException::new);
 
-        Favorite favorite = favoriteRepository.findByUserAndAdvertisementId(user.getId(), advertisementId).orElseThrow(FavoriteNotFoundException::new);
+        Favorite favorite = favoriteRepository.findByUserAndAdvertisementId(user.getId(), advertisement.getId()).orElseThrow(FavoriteNotFoundException::new);
 
 
         favoriteRepository.delete(favorite);
@@ -65,15 +65,12 @@ public class FavoriteService {
 
             Advertisement advertisement = favorite.getAdvertisement();
 
-            AdvertisementResponse response = AdvertisementResponse.builder()
-                    .id(advertisement.getId())
-                    .title(advertisement.getTitle())
-                    .price(advertisement.getPrice())
-                    .city(advertisement.getCity().getName())
-                    .province(advertisement.getProvince().getName())
-                    .category(advertisement.getCategory().getName())
-                    .images(advertisement.getImages())
-                    .build();
+            AdvertisementResponse response = new AdvertisementResponse(
+                advertisement.getId(), 
+                advertisement.getTitle(), 
+                advertisement.getPrice(), 
+                advertisement.getCity().getName(), 
+                advertisement.getStatus());
 
             advertisements.add(response);
         }
@@ -97,15 +94,9 @@ public class FavoriteService {
 
         Advertisement advertisement = favorite.getAdvertisement();
 
+        AdvertisementDetailResponse advertisementDetailResponse = new AdvertisementDetailResponse(
+            advertisement.getId(), advertisement.getTitle(), advertisement.getDescription(), advertisement.getPrice(), advertisement.getCity().getName(), advertisement.getProvince().getName(), advertisement.getCategory().getName());
 
-        return AdvertisementDetailResponse.builder()
-                .id(advertisement.getId())
-                .title(advertisement.getTitle())
-                .description(advertisement.getDescription())
-                .price(advertisement.getPrice())
-                .city(advertisement.getCity())
-                .category(advertisement.getCategory())
-                .images(advertisement.getImages())
-                .build();
+        return  advertisementDetailResponse;
     }
 }
