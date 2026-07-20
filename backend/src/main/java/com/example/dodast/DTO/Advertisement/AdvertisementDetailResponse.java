@@ -20,6 +20,8 @@ public class AdvertisementDetailResponse {
 
     private List<ImageResponse> images;
 
+    private boolean isFavorite;
+
 
     public AdvertisementDetailResponse(
             Long id,
@@ -29,7 +31,8 @@ public class AdvertisementDetailResponse {
             String city,
             String province,
             String category,
-            List<ImageResponse> images
+            List<ImageResponse> images,
+            boolean isFavorite
     ) {
 
         this.id = id;
@@ -73,5 +76,9 @@ public class AdvertisementDetailResponse {
 
     public String getCategory() {
         return category;
+    }
+
+    public boolean isFavorite(){
+        return isFavorite;
     }
 }
