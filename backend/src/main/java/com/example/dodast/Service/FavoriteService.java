@@ -81,7 +81,9 @@ public class FavoriteService {
                 advertisement.getPrice(), 
                 advertisement.getCity().getName(), 
                 advertisement.getStatus(),
-                imageUrl);
+                imageUrl,
+                true
+            );
 
             advertisements.add(response);
         }
@@ -114,7 +116,14 @@ public class FavoriteService {
             images.add(imageResponse);
         }
         AdvertisementDetailResponse advertisementDetailResponse = new AdvertisementDetailResponse(
-            advertisement.getId(), advertisement.getTitle(), advertisement.getDescription(), advertisement.getPrice(), advertisement.getCity().getName(), advertisement.getProvince().getName(), advertisement.getCategory().getName(), images);
+            advertisement.getId(), 
+            advertisement.getTitle(), 
+            advertisement.getDescription(), 
+            advertisement.getPrice(), 
+            advertisement.getCity().getName(), 
+            advertisement.getProvince().getName(), 
+            advertisement.getCategory().getName(), 
+            images, true);
 
         return  advertisementDetailResponse;
     }
