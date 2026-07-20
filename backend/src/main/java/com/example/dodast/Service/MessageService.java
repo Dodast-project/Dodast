@@ -14,6 +14,7 @@ import com.example.dodast.Model.User;
 import com.example.dodast.Repository.AdvertisementRepository;
 import com.example.dodast.Repository.ConversationRepository;
 import com.example.dodast.Repository.MessageRepository;
+import com.example.dodast.Exception.UserBlockedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,10 @@ public class MessageService {
 
         if (currentUser.getId().equals(seller.getId())) {
             throw new SelfMessageException();
+        }
+
+        if (currentUser.isBlocked() || seller.isBlocked()) {
+            throw new UserBlockedException();
         }
 
         Conversation conversation = conversationRepository
