@@ -186,15 +186,6 @@ public class AdvertisementService {
         return advertisementResponses;
     }
 
-    private User getCurrentUser(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof User){
-                User user = (User) principal;
-                return user;
-        }
-        throw new IllegalStateException("Authenticated user not found");
-    }
-
     private void checkCityProvinceMatch(City city, Province province){
         if(!city.getProvince().getId().equals(province.getId())) throw new CityProvinceNotMatchException();
     }
