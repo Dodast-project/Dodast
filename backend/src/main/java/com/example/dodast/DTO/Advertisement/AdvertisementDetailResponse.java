@@ -1,5 +1,7 @@
 package com.example.dodast.DTO.Advertisement;
 
+import java.util.List;
+
 public class AdvertisementDetailResponse {
 
     private Long id;
@@ -16,6 +18,9 @@ public class AdvertisementDetailResponse {
 
     private String category;
 
+    private List<ImageResponse> images;
+
+
     public AdvertisementDetailResponse(
             Long id,
             String title,
@@ -23,7 +28,9 @@ public class AdvertisementDetailResponse {
             Long price,
             String city,
             String province,
-            String category) {
+            String category,
+            List<ImageResponse> images
+    ) {
 
         this.id = id;
         this.title = title;
@@ -32,20 +39,39 @@ public class AdvertisementDetailResponse {
         this.city = city;
         this.province = province;
         this.category = category;
+        this.images = images;
     }
 
-    public Long getId() { return id; }
 
-    public String getTitle() { return title; }
+    public List<ImageResponse> getImages() {
+        return images;
+    }
+    
+    public Long getId() {
+        return id;
+    }
 
-    public String getDescription() { return description; }
+    public String getTitle() {
+        return title;
+    }
 
-    public Long getPrice() { return price; }
+    public String getDescription() {
+        return description;
+    }
 
-    public String getCity() { return city; }
+    public Long getPrice() {
+        return price;
+    }
 
-    public String getProvince() { return province; }
+    public String getCity() {
+        return city;
+    }
 
-    public String getCategory() { return category; }
+    public String getProvince() {
+        return province;
+    }
 
+    public String getCategory() {
+        return category;
+    }
 }
