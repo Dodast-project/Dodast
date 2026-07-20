@@ -3,11 +3,10 @@ package com.example.dodast.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dodast.DTO.FavoriteResponse;
 import com.example.dodast.Service.FavoriteService;
-import com.example.dodast.DTO.AdvertisementResponse;
+import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import java.util.List;
-import com.example.dodast.DTO.AdvertisementResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,3 +48,4 @@ public class FavoriteController {
     }
     
 }
+
