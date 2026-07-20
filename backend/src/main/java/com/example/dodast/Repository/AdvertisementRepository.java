@@ -38,23 +38,23 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
             )
             AND (
                 :categoryId IS NULL
-                OR a.category.id = :categoryId
+                OR advert.category.id = :categoryId
               )
             AND (
                 :provinceId IS NULL
-                OR a.province.id = :provinceId
+                OR advert.province.id = :provinceId
                 )
             AND (
                 :cityId IS NULL
-                OR a.city.id = :cityId
+                OR advert.city.id = :cityId
                 )
             AND (
                 :minPrice IS NULL
-                OR a.price >= :minPrice
+                OR advert.price >= :minPrice
                 )
             AND (
                 :maxPrice IS NULL
-                OR a.price <= :maxPrice
+                OR advert.price <= :maxPrice
                 )
     """)
     List<Advertisement> searchAdvertisements(
