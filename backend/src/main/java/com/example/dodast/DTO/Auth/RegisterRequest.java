@@ -1,6 +1,10 @@
 package com.example.dodast.DTO.Auth;
 
+<<<<<<< HEAD
 import com.example.dodast.Model.Enums.Role;
+=======
+import javax.management.relation.Role;
+>>>>>>> helia/new/advertisement
 
 public class RegisterRequest {
     private String fullName;

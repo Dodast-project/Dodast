@@ -13,6 +13,7 @@ import com.example.dodast.Exception.UserNotFoundException;
 import com.example.dodast.Model.User;
 import com.example.dodast.Model.Enums.Role;
 import com.example.dodast.Repository.UserRepository;
+<<<<<<< HEAD
 import com.example.dodast.Security.JwtService;
 
 @Service
@@ -25,6 +26,17 @@ public class AuthService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+=======
+
+@Service
+public class AuthService {
+    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+>>>>>>> helia/new/advertisement
     }
 
     public AuthResponse register(RegisterRequest request){
@@ -40,9 +52,13 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
 
+<<<<<<< HEAD
         String token = jwtService.generateToken(savedUser.getId(), savedUser.getUsername(), savedUser.getRole());
 
         return new AuthResponse("Register successful", savedUser.getId(), savedUser.getUsername(), savedUser.getRole(), token);
+=======
+        return new AuthResponse("Register successful", savedUser.getId(), savedUser.getUsername(), savedUser.getRole());
+>>>>>>> helia/new/advertisement
     }
 
     public AuthResponse login(LoginRequest request){
@@ -51,9 +67,13 @@ public class AuthService {
 
         if(!passwordEncoder.matches(request.getPassword(), user.getHashedPassword())) throw new InvalidPasswordException();
 
+<<<<<<< HEAD
         String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole());
 
         return new AuthResponse("Login successful", user.getId(), user.getUsername(), user.getRole(), token);
+=======
+        return new AuthResponse("Login successful", user.getId(), user.getUsername(), user.getRole());
+>>>>>>> helia/new/advertisement
     }
 
 

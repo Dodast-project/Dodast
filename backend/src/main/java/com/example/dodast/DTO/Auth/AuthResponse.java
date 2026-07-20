@@ -7,14 +7,22 @@ public class AuthResponse {
     private Long id;
     private String username;
     private Role role;
+<<<<<<< HEAD
     private String token;
 
     public AuthResponse(String message, Long id, String username, Role role, String token){
+=======
+
+    public AuthResponse(String message, Long id, String username, Role role){
+>>>>>>> helia/new/advertisement
         this.message = message;
         this.id = id;
         this.username = username;
         this.role = role;
+<<<<<<< HEAD
         this.token = token;
+=======
+>>>>>>> helia/new/advertisement
     }
 
     public Long getId() {
@@ -32,9 +40,12 @@ public class AuthResponse {
     public String getUsername() {
         return username;
     }
+<<<<<<< HEAD
 
     public String getToken() {
         return token;
     }
+=======
+>>>>>>> helia/new/advertisement
     
 }
