@@ -32,7 +32,7 @@ public class FavoriteService {
 
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(AdvertisementNotFoundException::new);
 
-        if(favoriteRepository.existsByUserAndAdvertisementId(user.getId(), advertisementId)) throw new FavoriteAlreadyExistsException();
+        if(favoriteRepository.existsByUserIdAndAdvertisementId(user.getId(), advertisementId)) throw new FavoriteAlreadyExistsException();
 
         Favorite favorite = Favorite.builder()
             .user(user)
@@ -47,7 +47,7 @@ public class FavoriteService {
 
         Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(AdvertisementNotFoundException::new);
 
-        Favorite favorite = favoriteRepository.findByUserAndAdvertisementId(user.getId(), advertisement.getId()).orElseThrow(FavoriteNotFoundException::new);
+        Favorite favorite = favoriteRepository.findByUserIdAndAdvertisementId(user.getId(), advertisement.getId()).orElseThrow(FavoriteNotFoundException::new);
 
 
         favoriteRepository.delete(favorite);
