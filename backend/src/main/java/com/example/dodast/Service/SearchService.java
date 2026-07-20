@@ -56,7 +56,8 @@ public class SearchService {
                 ad.getTitle(),
                 ad.getPrice(),
                 ad.getCity().getName(),
-                ad.getStatus()
+                ad.getStatus(),
+                getFirstImage(ad)
             );
 
             adResponses.add(adResponse);
@@ -78,6 +79,16 @@ public class SearchService {
     private String normalizeKeyword(String keyword){
         if(keyword == null || keyword.isBlank()) return null;
         return keyword.trim();
+    }
+
+    private String getFirstImage(Advertisement advertisement){
+
+        if(advertisement.getImages() == null ||
+        advertisement.getImages().isEmpty()) return null;
+
+        return advertisement.getImages()
+                .get(0)
+                .getImageUrl();
     }
 
     
