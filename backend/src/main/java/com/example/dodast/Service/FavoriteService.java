@@ -3,10 +3,13 @@ package com.example.dodast.Service;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.dodast.Model.Advertisement;
+import com.example.dodast.Model.AdvertisementImage;
+
 import org.springframework.stereotype.Service;
 import com.example.dodast.Repository.AdvertisementRepository;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.DTO.Advertisement.ImageResponse;
 import com.example.dodast.Exception.FavoriteAlreadyExistsException;
 import com.example.dodast.Repository.FavoriteRepository;
 import com.example.dodast.Model.Favorite;
@@ -65,12 +68,20 @@ public class FavoriteService {
 
             Advertisement advertisement = favorite.getAdvertisement();
 
+            String imageUrl = null;
+
+            if(advertisement.getImages() != null &&
+            !advertisement.getImages().isEmpty()){
+
+                imageUrl = advertisement.getImages().get(0).getImageUrl();
+            }
             AdvertisementResponse response = new AdvertisementResponse(
                 advertisement.getId(), 
                 advertisement.getTitle(), 
                 advertisement.getPrice(), 
                 advertisement.getCity().getName(), 
-                advertisement.getStatus());
+                advertisement.getStatus(),
+                imageUrl);
 
             advertisements.add(response);
         }
@@ -94,8 +105,16 @@ public class FavoriteService {
 
         Advertisement advertisement = favorite.getAdvertisement();
 
+        List<ImageResponse> images = new ArrayList<>();
+
+        for(AdvertisementImage image : advertisement.getImages()){
+
+            ImageResponse imageResponse = new ImageResponse(image.getId(), image.getImageUrl());
+
+            images.add(imageResponse);
+        }
         AdvertisementDetailResponse advertisementDetailResponse = new AdvertisementDetailResponse(
-            advertisement.getId(), advertisement.getTitle(), advertisement.getDescription(), advertisement.getPrice(), advertisement.getCity().getName(), advertisement.getProvince().getName(), advertisement.getCategory().getName());
+            advertisement.getId(), advertisement.getTitle(), advertisement.getDescription(), advertisement.getPrice(), advertisement.getCity().getName(), advertisement.getProvince().getName(), advertisement.getCategory().getName(), images);
 
         return  advertisementDetailResponse;
     }
