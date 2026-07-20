@@ -37,4 +37,24 @@ public class AdvertisementResponse {
     public String getImageUrl(){
         return imageUrl;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public AdvertisementStatus getStatus() {
+        return status;
+    }
 }
