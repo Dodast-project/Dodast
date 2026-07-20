@@ -33,6 +33,7 @@ public class AdvertisementService {
     private final ProvinceRepository provinceRepository;
     private final AdvertisementImageRepository advertisementImageRepository;
     private final ImageService imageService;
+    private final FavoriteRepository favoriteRepository;
 
     public AdvertisementResponse createAdvertisement(CreateAdvertisementRequest request) {
 
@@ -86,7 +87,8 @@ public class AdvertisementService {
                 savedAdvertisement.getPrice(),
                 savedAdvertisement.getCity().getName(),
                 savedAdvertisement.getStatus(),
-                getFirstImage(savedAdvertisement)
+                getFirstImage(savedAdvertisement),
+                false
         );
     }
 
@@ -124,7 +126,8 @@ public class AdvertisementService {
                 advertisement.getPrice(),
                 advertisement.getCity().getName(),
                 advertisement.getStatus(),
-                getFirstImage(advertisement)
+                getFirstImage(advertisement),
+                isFavorite(id)
         );
     }
 
@@ -198,7 +201,8 @@ public class AdvertisementService {
                 advertisement.getCity().getName(), 
                 advertisement.getProvince().getName(), 
                 advertisement.getCategory().getName(),
-                images
+                images,
+                isFavorite(advertisement.getId())
         );
 
         return advertisementDetailResponse;
@@ -217,7 +221,8 @@ public class AdvertisementService {
                         advertisement.getPrice(), 
                         advertisement.getCity().getName(), 
                         advertisement.getStatus(),
-                        getFirstImage(advertisement)
+                        getFirstImage(advertisement),
+                        isFavorite(advertisement.getId())
                 );
 
                 advertisementResponses.add(advertisementResponse);
@@ -241,7 +246,8 @@ public class AdvertisementService {
                         ad.getPrice(), 
                         ad.getCity().getName(), 
                         ad.getStatus(),
-                        getFirstImage(ad)
+                        getFirstImage(ad),
+                        isFavorite(ad.getId())
                 );
 
                 adResponseList.add(adResponse);
@@ -258,6 +264,13 @@ public class AdvertisementService {
         return advertisement.getImages()
                 .get(0)
                 .getImageUrl();
+        }
+
+    private boolean isFavorite(Long advertisementId){
+
+        User user = AdAuthenticator.getCurrentUser();
+
+        return favoriteRepository.existsByUserIdAndAdvertisementId(user.getId(), advertisementId);
         }
 
 }

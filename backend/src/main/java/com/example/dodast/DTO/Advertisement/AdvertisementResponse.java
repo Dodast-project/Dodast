@@ -16,6 +16,8 @@ public class AdvertisementResponse {
 
     private String imageUrl;
 
+    private boolean isFavorite;
+
 
     public AdvertisementResponse(
             Long id,
@@ -23,7 +25,8 @@ public class AdvertisementResponse {
             Long price,
             String city,
             AdvertisementStatus status,
-            String imageUrl
+            String imageUrl,
+            boolean isFavorite
     ){
         this.id = id;
         this.title = title;
@@ -31,6 +34,7 @@ public class AdvertisementResponse {
         this.city = city;
         this.status = status;
         this.imageUrl = imageUrl;
+        this.isFavorite = isFavorite;
     }
 
 
@@ -56,5 +60,9 @@ public class AdvertisementResponse {
 
     public AdvertisementStatus getStatus() {
         return status;
+    }
+
+    public boolean isFavorite(){
+        return isFavorite;
     }
 }
