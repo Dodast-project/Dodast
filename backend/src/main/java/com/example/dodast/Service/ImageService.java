@@ -11,9 +11,18 @@ import java.nio.file.*;
 public class ImageService {
 
     private final String uploadDirectory = "uploads/";
-    
+
     public String saveImage(MultipartFile file){
         try {
+
+            if(file.isEmpty()){
+                throw new ImageUploadException();
+            }
+
+            if(file.getContentType() == null || !file.getContentType().startsWith("image")){
+                throw new ImageUploadException();
+            }
+
             Path directory = Paths.get(uploadDirectory);
 
             if(!Files.exists(directory)){
