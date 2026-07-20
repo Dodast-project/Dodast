@@ -9,7 +9,6 @@ import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
-import com.example.dodast.DTO.Advertisement.ImageResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Model.*;
@@ -63,8 +62,7 @@ public class AdvertisementService {
                 savedAdvertisement.getTitle(),
                 savedAdvertisement.getPrice(),
                 savedAdvertisement.getCity().getName(),
-                savedAdvertisement.getStatus(),
-                getFirstImage(savedAdvertisement)
+                savedAdvertisement.getStatus()
         );
     }
 
@@ -101,8 +99,7 @@ public class AdvertisementService {
                 advertisement.getTitle(),
                 advertisement.getPrice(),
                 advertisement.getCity().getName(),
-                advertisement.getStatus(),
-                getFirstImage(advertisement)
+                advertisement.getStatus()
         );
     }
 
@@ -155,19 +152,6 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementRepository.findById(id)
                 .orElseThrow(AdvertisementNotFoundException::new);
         
-        List<ImageResponse> images = new ArrayList<>();
-
-        if(advertisement.getImages() != null){
-                for (AdvertisementImage image : advertisement.getImages()) {
-                        ImageResponse imageResponse = new ImageResponse(
-                                image.getId(),
-                                image.getImageUrl()
-                                );
-                        images.add(imageResponse);
-                }
-        }
-        
-
         AdvertisementDetailResponse advertisementDetailResponse = new AdvertisementDetailResponse(
                 advertisement.getId(),
                 advertisement.getTitle(), 
@@ -175,8 +159,7 @@ public class AdvertisementService {
                 advertisement.getPrice(), 
                 advertisement.getCity().getName(), 
                 advertisement.getProvince().getName(), 
-                advertisement.getCategory().getName(),
-                images
+                advertisement.getCategory().getName()
         );
 
         return advertisementDetailResponse;
@@ -194,8 +177,7 @@ public class AdvertisementService {
                         advertisement.getTitle(), 
                         advertisement.getPrice(), 
                         advertisement.getCity().getName(), 
-                        advertisement.getStatus(),
-                        getFirstImage(advertisement)
+                        advertisement.getStatus()
                 );
 
                 advertisementResponses.add(advertisementResponse);
@@ -218,8 +200,7 @@ public class AdvertisementService {
                         ad.getTitle(), 
                         ad.getPrice(), 
                         ad.getCity().getName(), 
-                        ad.getStatus(),
-                        getFirstImage(ad)
+                        ad.getStatus()
                 );
 
                 adResponseList.add(adResponse);
@@ -227,16 +208,6 @@ public class AdvertisementService {
 
         return adResponseList;
     }
-
-    private String getFirstImage(Advertisement advertisement){
-
-        if(advertisement.getImages() == null ||
-        advertisement.getImages().isEmpty()) return null;
-
-        return advertisement.getImages()
-                .get(0)
-                .getImageUrl();
-        }
 
 }
 
