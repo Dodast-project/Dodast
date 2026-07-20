@@ -1,9 +1,5 @@
 package com.example.dodast.Model;
 
-import org.hibernate.annotations.ManyToAny;
-import com.example.dodast.Model.User;
-import com.example.dodast.Model.Advertisement;
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +24,7 @@ public class Favorite{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
