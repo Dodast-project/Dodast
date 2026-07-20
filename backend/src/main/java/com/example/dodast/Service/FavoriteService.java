@@ -53,27 +53,59 @@ public class FavoriteService {
         favoriteRepository.delete(favorite);
     }
 
-    public List<FavoriteResponse> getFavorites(){
+    public List<AdvertisementResponse> getFavorites(){
+
         User user = AdAuthenticator.getCurrentUser();
 
         List<Favorite> favorites = favoriteRepository.findByUserId(user.getId());
 
-        List<FavoriteResponse> favoriteResponses = new ArrayList<>();
+        List<AdvertisementResponse> advertisements = new ArrayList<>();
 
-        for(Favorite favorite: favorites){
-            FavoriteResponse favoriteResponse = FavoriteResponse.builder()
-                                                                .favoriteId(favorite.getId())
-                                                                .advertisementId(favorite.getAdvertisement().getId())
-                                                                .title(favorite.getAdvertisement().getTitle())
-                                                                .price(favorite.getAdvertisement().getPrice())
-                                                                .city(favorite.getAdvertisement().getCity().getName())
-                                                                .province(favorite.getAdvertisement().getProvince().getName())
-                                                                .category(favorite.getAdvertisement().getCategory().getName())
-                                                                .image(favorite.getAdvertisement().getImages())
-                                                                .build();
-            favoriteResponses.add(favoriteResponse);
+        for(Favorite favorite : favorites){
+
+            Advertisement advertisement = favorite.getAdvertisement();
+
+            AdvertisementResponse response = AdvertisementResponse.builder()
+                    .id(advertisement.getId())
+                    .title(advertisement.getTitle())
+                    .price(advertisement.getPrice())
+                    .city(advertisement.getCity().getName())
+                    .province(advertisement.getProvince().getName())
+                    .category(advertisement.getCategory().getName())
+                    .images(advertisement.getImages())
+                    .build();
+
+            advertisements.add(response);
         }
-        return favoriteResponses;
 
+        return advertisements;
+    }
+
+    public AdvertisementDetailResponse getFavoriteDetail(Long favoriteId){
+
+        User user = AdAuthenticator.getCurrentUser();
+
+        Favorite favorite = favoriteRepository
+                .findById(favoriteId)
+                .orElseThrow(FavoriteNotFoundException::new);
+
+
+        if(!favorite.getUser().getId().equals(user.getId())){
+            throw new FavoriteNotFoundException();
+        }
+
+
+        Advertisement advertisement = favorite.getAdvertisement();
+
+
+        return AdvertisementDetailResponse.builder()
+                .id(advertisement.getId())
+                .title(advertisement.getTitle())
+                .description(advertisement.getDescription())
+                .price(advertisement.getPrice())
+                .city(advertisement.getCity())
+                .category(advertisement.getCategory())
+                .images(advertisement.getImages())
+                .build();
     }
 }

@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dodast.DTO.FavoriteResponse;
 import com.example.dodast.Service.FavoriteService;
-
+import com.example.dodast.DTO.AdvertisementResponse;
 import java.util.List;
-
+import com.example.dodast.DTO.AdvertisementResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,21 +26,26 @@ public class FavoriteController {
         this.favoriteService = favoriteService;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{advertisementId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void setFavorite(@PathVariable Long advertisementId) {
         favoriteService.setFavorite(advertisementId);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{advertisementId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeFavorite(@PathVariable Long advertisementId){
         favoriteService.removeFavorite(advertisementId);
     }
     
     @GetMapping
-    public List<FavoriteResponse> getFavorites() {
+    public List<AdvertisementResponse> getFavorites() {
         return favoriteService.getFavorites();
+    }
+
+    @GetMapping("/{favoriteId}")
+    public AdvertisementDetailResponse getFavoriteDetail(@PathVariable Long favoriteId){
+        return favoriteService.getFavoriteDetail(favoriteId);
     }
     
 }
