@@ -63,17 +63,22 @@ public class AdvertisementService {
         Advertisement savedAdvertisement = advertisementRepository.save(advertisement);
 
         if(request.getImages() != null){
+                List<AdvertisementImage> images = new ArrayList<>();
 
                 for(MultipartFile image : request.getImages()){
-
                         String imageUrl = imageService.saveImage(image);
 
                         AdvertisementImage advertisementImage = AdvertisementImage.builder()
                                         .imageUrl(imageUrl)
                                         .advertisement(savedAdvertisement)
                                         .build();
+
                         advertisementImageRepository.save(advertisementImage);
+
+                        images.add(advertisementImage);
                 }
+
+                savedAdvertisement.setImages(images);
         }
         return new AdvertisementResponse(
                 savedAdvertisement.getId(),
