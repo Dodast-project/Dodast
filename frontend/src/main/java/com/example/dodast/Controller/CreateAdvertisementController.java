@@ -11,6 +11,7 @@ import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.SceneManager;
 
 import java.io.File;
+import java.net.http.HttpResponse;
 
 public class CreateAdvertisementController {
 
@@ -79,7 +80,7 @@ public class CreateAdvertisementController {
         }
 
         try {
-            boolean created = advertisementService.createAdvertisement(
+            HttpResponse<String> response = advertisementService.createAdvertisement(
                             title,
                             description,
                             price,
@@ -89,11 +90,11 @@ public class CreateAdvertisementController {
                             selectedImage
                         );
             
-            if (created) {
+            if (response == null) {
                 showMessage("آگهی با موفقیت ثبت شد");
                 clearFields();
             } else {
-                showMessage("ثبت آگهی ناموفق بود");
+                showMessage(response.body() + response.statusCode());
             }
 
         } catch (Exception e) {
