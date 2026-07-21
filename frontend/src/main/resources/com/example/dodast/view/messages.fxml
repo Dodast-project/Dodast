@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.dodast.Controller.MessagesController"
+            prefHeight="600.0" prefWidth="900.0">
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="بازگشت" onAction="#backToHome"/>
+            <Label text="گفت‌وگوهای من" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+    <center>
+        <ListView fx:id="conversationsListView"/>
+    </center>
+    <bottom>
+        <Label fx:id="messageLabel">
+            <BorderPane.margin>
+                <Insets top="5" right="10" bottom="5" left="10"/>
+            </BorderPane.margin>
+        </Label>
+    </bottom>
+</BorderPane>
