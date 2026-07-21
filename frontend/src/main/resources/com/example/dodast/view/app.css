@@ -1,0 +1,74 @@
+.root {
+    -fx-font-family: "Arial";
+}
+
+.page {
+    -fx-background-color: #f5f6f8;
+}
+
+.form-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 0, 0, 0.12),
+        18,
+        0,
+        0,
+        4
+    );
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-text-fill: #666666;
+}
+
+.text-field,
+.password-field {
+    -fx-pref-height: 42;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+}
+
+.button {
+    -fx-pref-height: 40;
+    -fx-background-radius: 7;
+    -fx-cursor: hand;
+}
+
+.error-label {
+    -fx-text-fill: #c62828;
+}
+
+.navbar {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #dddddd transparent;
+}
+
+.brand {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.advertisement-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #dddddd;
+}
+
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
