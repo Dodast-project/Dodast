@@ -7,16 +7,12 @@ import com.example.dodast.Util.SceneManager;
 import com.example.dodast.Util.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
@@ -99,6 +95,19 @@ public class HomeController implements Initializable {
     private void hideError() {
         messageLabel.setManaged(false);
         messageLabel.setVisible(false);
+    }
+
+    @FXML
+    private void openCreateAdvertisement() {
+
+        try {
+            Stage stage = (Stage) usernameLabel.getScene().getWindow();
+
+            SceneManager.switchScene(stage, "create-advertisement.fxml");
+
+        } catch (Exception e) {
+            showMessage(e.getMessage());
+        }
     }
 
     
