@@ -4,28 +4,50 @@ services:
     image: postgres:16
     container_name: dodast-postgres
     restart: always
+
     environment:
       POSTGRES_USER: dodast_postgre_username
       POSTGRES_PASSWORD: dodast_postgre_password
       POSTGRES_DB: dodast_postgre
+
     ports:
       - "5432:5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U dodast_postgre_username -d dodast_postgre
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 
   backend:
     build:
       context: ./backend
+
     container_name: dodast-backend
     restart: always
+
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+
     ports:
       - "8080:8080"
+
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dodast_postgre
       SPRING_DATASOURCE_USERNAME: dodast_postgre_username
       SPRING_DATASOURCE_PASSWORD: dodast_postgre_password
 
+    volumes:
+      - backend_uploads:/app/uploads
+
+
 volumes:
   postgres_data:
+  backend_uploads:
