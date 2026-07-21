@@ -2,6 +2,7 @@ package com.example.dodast.Controller;
 
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Service.AdvertisementService;
+import com.example.dodast.Util.AdvertisementCard;
 import com.example.dodast.Util.SceneManager;
 import com.example.dodast.Util.SessionManager;
 import javafx.fxml.FXML;
@@ -58,7 +59,7 @@ public class HomeController implements Initializable {
 
             for (AdvertisementResponse advertisement : advertisements) {
 
-                advertisementsPane.getChildren().add(createAdvertisementCard(advertisement));
+                advertisementsPane.getChildren().add(AdvertisementCard.createAdvertisementCard(advertisement));
             }
 
         } catch (Exception e) {
@@ -67,35 +68,6 @@ public class HomeController implements Initializable {
         } finally {
             setLoading(false);
         }
-    }
-
-    private VBox createAdvertisementCard(AdvertisementResponse advertisement) {
-
-        Label title = new Label(advertisement.getTitle());
-
-        title.getStyleClass().add("card-title");
-
-        NumberFormat formatter = NumberFormat.getInstance(Locale.forLanguageTag("fa-IR"));
-
-        Label price = new Label(formatter.format(advertisement.getPrice())+ " تومان");
-
-        Label city = new Label(advertisement.getCity());
-
-        Button detailsButton = new Button("مشاهده جزئیات");
-
-        VBox card = new VBox(
-                10,
-                title,
-                price,
-                city,
-                detailsButton
-            );
-
-        card.setPadding(new Insets(15));
-        card.setPrefWidth(220);
-        card.getStyleClass().add("advertisement-card");
-
-        return card;
     }
 
     @FXML
