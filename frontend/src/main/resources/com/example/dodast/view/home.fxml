@@ -28,8 +28,9 @@
 
             <Label fx:id="usernameLabel"/>
 
-            <Button text="ثبت آگهی"/>
-
+            <Button text="ثبت آگهی"
+                    onAction="#openCreateAdvertisement"/>
+                
             <Button text="علاقه‌مندی‌ها"/>
 
             <Button text="خروج"
