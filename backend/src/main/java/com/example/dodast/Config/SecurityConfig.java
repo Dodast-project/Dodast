@@ -41,6 +41,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/advertisements/*/sold").authenticated()
                         .requestMatchers("/favorite", "/favorite/**").authenticated()
                         .requestMatchers("/messages/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
+                        .requestMatchers("/ratings/**").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/health").permitAll()
                         .requestMatchers(HttpMethod.GET,"/search","/search/**").permitAll()
                         .anyRequest().permitAll()
