@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.dodast.Controller.CreateAdvertisementController"
+            styleClass="page">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="15"
+              styleClass="navbar">
+
+            <padding>
+                <Insets top="15"
+                        right="25"
+                        bottom="15"
+                        left="25"/>
+            </padding>
+
+            <Label text="ثبت آگهی جدید"
+                   styleClass="brand"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="بازگشت"
+                    onAction="#backToHome"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER"
+              spacing="15"
+              maxWidth="500">
+
+            <padding>
+                <Insets top="30"
+                        right="30"
+                        bottom="30"
+                        left="30"/>
+            </padding>
+
+            <Label text="اطلاعات آگهی"
+                   styleClass="section-title"/>
+
+            <TextField fx:id="titleField"
+                       promptText="عنوان آگهی"/>
+
+            <TextArea fx:id="descriptionField"
+                      promptText="توضیحات آگهی"
+                      prefRowCount="5"
+                      wrapText="true"/>
+
+            <TextField fx:id="priceField"
+                       promptText="قیمت"/>
+
+            <TextField fx:id="categoryIdField"
+                       promptText="شناسه دسته‌بندی"/>
+
+            <TextField fx:id="provinceIdField"
+                       promptText="شناسه استان"/>
+
+            <TextField fx:id="cityIdField"
+                       promptText="شناسه شهر"/>
+
+            <Button text="انتخاب تصویر"
+                    onAction="#chooseImage"/>
+
+            <Label fx:id="imageNameLabel"
+                   text="تصویری انتخاب نشده"/>
+
+            <Label fx:id="messageLabel"
+                   visible="true"
+                   managed="true"/>
+
+            <Button text="ثبت آگهی"
+                    onAction="#createAdvertisement"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
