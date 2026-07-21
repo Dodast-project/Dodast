@@ -30,7 +30,7 @@ public class AdvertisementService {
         throw new GetAdvertisementError(response.statusCode());
     }
 
-    public boolean createAdvertisement(String title,
+    public HttpResponse<String>  createAdvertisement(String title,
             String description,
             String price,
             String categoryId,
@@ -47,11 +47,8 @@ public class AdvertisementService {
                         cityId,
                         image
                     );
+        if(response.statusCode() >= 200 && response.statusCode() < 300) return null;
 
-            System.out.println("Status code: " + response.statusCode());
-
-    System.out.println("Response body: " + response.body());
-
-        return response.statusCode() >= 200 && response.statusCode() < 300;
+        return response;
     }
 }
