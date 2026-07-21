@@ -53,7 +53,7 @@ public class SearchService {
         
         for(Advertisement ad: ads){
 
-            
+
             AdvertisementResponse adResponse = new AdvertisementResponse(
                 ad.getId(),
                 ad.getTitle(),
