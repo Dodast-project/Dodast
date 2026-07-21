@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.dodast.Controller.HomeController"
+            styleClass="page">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="15"
+              styleClass="navbar">
+
+            <padding>
+                <Insets top="15"
+                        right="25"
+                        bottom="15"
+                        left="25"/>
+            </padding>
+
+            <Label text="دودست"
+                   styleClass="brand"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="usernameLabel"/>
+
+            <Button text="ثبت آگهی"/>
+
+            <Button text="علاقه‌مندی‌ها"/>
+
+            <Button text="خروج"
+                    onAction="#logout"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20">
+
+            <padding>
+                <Insets top="25"
+                        right="35"
+                        bottom="25"
+                        left="35"/>
+            </padding>
+
+            <HBox spacing="10">
+                <TextField fx:id="searchField"
+                           promptText="جست‌وجوی آگهی..."
+                           HBox.hgrow="ALWAYS"/>
+
+                <Button text="جست‌وجو"/>
+            </HBox>
+
+            <Label text="جدیدترین آگهی‌ها"
+                   styleClass="section-title"/>
+
+            <ProgressIndicator fx:id="loadingIndicator"
+                               visible="false"
+                               managed="false"/>
+
+            <Label fx:id="messageLabel"
+                   visible="false"
+                   managed="false"/>
+
+            <ScrollPane fitToWidth="true"
+                        VBox.vgrow="ALWAYS">
+
+                <content>
+                    <FlowPane fx:id="advertisementsPane"
+                              hgap="15"
+                              vgap="15"
+                              prefWrapLength="780"/>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>
