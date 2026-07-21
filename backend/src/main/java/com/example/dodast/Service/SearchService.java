@@ -50,14 +50,15 @@ public class SearchService {
         
         for(Advertisement ad: ads){
 
-            
+
             AdvertisementResponse adResponse = new AdvertisementResponse(
-                ad.getId(),
-                ad.getTitle(),
-                ad.getPrice(),
-                ad.getCity().getName(),
-                ad.getStatus(),
-                getFirstImage(ad)
+                    ad.getId(),
+                    ad.getTitle(),
+                    ad.getPrice(),
+                    ad.getCity().getName(),
+                    ad.getStatus(),
+                    getFirstImage(ad),
+                    false
             );
 
             adResponses.add(adResponse);
