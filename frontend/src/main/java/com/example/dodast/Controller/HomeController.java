@@ -3,6 +3,7 @@ package com.example.dodast.Controller;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementCard;
+import com.example.dodast.Util.AdvertisementSession;
 import com.example.dodast.Util.SceneManager;
 import com.example.dodast.Util.SessionManager;
 import javafx.fxml.FXML;
@@ -39,6 +40,19 @@ public class HomeController implements Initializable {
         loadAdvertisements();
     }
 
+    private void showAdvertisementDetail(Long advertisementId) {
+        try {
+            AdvertisementSession.setSelectedAdvertisementId(advertisementId);
+
+            Stage stage = (Stage) advertisementsPane.getScene().getWindow();
+
+            SceneManager.switchScene(stage, "advertisement-detail.fxml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadAdvertisements() {
 
         setLoading(true);
@@ -55,7 +69,7 @@ public class HomeController implements Initializable {
 
             for (AdvertisementResponse advertisement : advertisements) {
 
-                advertisementsPane.getChildren().add(AdvertisementCard.createAdvertisementCard(advertisement));
+                advertisementsPane.getChildren().add(AdvertisementCard.createAdvertisementCard(advertisement, () -> showAdvertisementDetail(advertisement.getId())));
             }
 
         } catch (Exception e) {

@@ -12,7 +12,7 @@ public class AdvertisementCard {
 
     public static final String BASE_URL = "http://localhost:8080";
 
-    public static VBox createAdvertisementCard(AdvertisementResponse advertisement) {
+    public static VBox createAdvertisementCard(AdvertisementResponse advertisement, Runnable onClick) {
 
         ImageView imageView = new ImageView();
 
@@ -20,7 +20,7 @@ public class AdvertisementCard {
 
         if (imagePath != null && !imagePath.isBlank()) {
 
-            String fullImageUrl = "http://localhost:8080" + imagePath;
+            String fullImageUrl = BASE_URL + imagePath;
 
             Image image = new Image(fullImageUrl, true);
 
@@ -53,8 +53,9 @@ public class AdvertisementCard {
 
         card.setPadding(new Insets(10));
         card.setPrefWidth(220);
-
         card.getStyleClass().add("advertisement-card");
+        card.setOnMouseClicked(event -> onClick.run());
+        card.setStyle("-fx-cursor: hand;");
 
         return card;
     }
