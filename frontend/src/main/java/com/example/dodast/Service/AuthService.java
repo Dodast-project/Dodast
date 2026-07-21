@@ -1,9 +1,10 @@
 package com.example.dodast.Service;
 
 import com.example.dodast.DTO.Auth.AuthResponse;
+import com.example.dodast.DTO.Auth.ErrorResponse;
 import com.example.dodast.DTO.Auth.LoginRequest;
 import com.example.dodast.DTO.Auth.RegisterRequest;
-import com.example.dodast.Exception.ConnectionError;
+import com.example.dodast.Exception.CannotResponseBackendError;
 import com.example.dodast.Exception.UIException;
 import com.example.dodast.Util.SessionManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,14 +45,30 @@ public class AuthService {
     }
 
     private UIException createApiException(HttpResponse<String> response) {
-
         try {
-            UIException error = mapper.readValue(response.body(), UIException.class);
 
-            return error;
+            ErrorResponse error = mapper.readValue(response.body(), ErrorResponse.class);
 
-        } catch (Exception ignored) {
-            return new ConnectionError(response.statusCode());
+            String message = error.getMessage();
+
+            if (error.getErrors() != null && !error.getErrors().isEmpty()) {
+
+                message += "\n";
+
+                for (String entry : error.getErrors().keySet()) {
+                    message += entry + ": " + error.getErrors().get(entry) + "\n";
+                }
+            }
+
+            return new UIException(response.body(),response.statusCode());
+
+        } catch (Exception e) {
+
+            System.err.println("Status: " + response.statusCode());
+            System.err.println("Body: " + response.body());
+            e.printStackTrace();
+
+            return new CannotResponseBackendError(response.statusCode());
         }
     }
 }
