@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.dodast.Controller.RegisterController"
+            styleClass="page">
+
+    <center>
+        <VBox alignment="CENTER"
+              spacing="12"
+              maxWidth="380"
+              styleClass="form-card">
+
+            <padding>
+                <Insets top="30"
+                        right="35"
+                        bottom="30"
+                        left="35"/>
+            </padding>
+
+            <Label text="ساخت حساب کاربری"
+                   styleClass="title"/>
+
+            <TextField fx:id="fullNameField"
+                       promptText="نام و نام خانوادگی"
+                       prefWidth="300"/>
+
+            <TextField fx:id="usernameField"
+                       promptText="نام کاربری"
+                       prefWidth="300"/>
+
+            <TextField fx:id="emailField"
+                       promptText="ایمیل"
+                       prefWidth="300"/>
+
+            <PasswordField fx:id="passwordField"
+                           promptText="رمز عبور"
+                           prefWidth="300"/>
+
+            <PasswordField fx:id="confirmPasswordField"
+                           promptText="تکرار رمز عبور"
+                           prefWidth="300"/>
+
+            <Label fx:id="errorLabel"
+                   visible="false"
+                   managed="false"
+                   wrapText="true"
+                   styleClass="error-label"/>
+
+            <Button fx:id="registerButton"
+                    text="ثبت‌نام"
+                    prefWidth="300"
+                    defaultButton="true"
+                    onAction="#register"/>
+
+            <Hyperlink text="قبلاً ثبت‌نام کرده‌اید؟ ورود"
+                       onAction="#goToLogin"/>
+        </VBox>
+    </center>
+</BorderPane>

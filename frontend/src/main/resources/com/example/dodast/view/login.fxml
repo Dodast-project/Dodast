@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.dodast.Controller.LoginController"
+            styleClass="page">
+
+    <center>
+        <VBox alignment="CENTER"
+              spacing="14"
+              maxWidth="360"
+              styleClass="form-card">
+
+            <padding>
+                <Insets top="35"
+                        right="35"
+                        bottom="35"
+                        left="35"/>
+            </padding>
+
+            <Label text="ورود به دودست"
+                   styleClass="title"/>
+
+            <Label text="نام کاربری یا ایمیل خود را وارد کنید"
+                   styleClass="subtitle"/>
+
+            <TextField fx:id="identifierField"
+                       promptText="نام کاربری یا ایمیل"
+                       prefWidth="290"/>
+
+            <PasswordField fx:id="passwordField"
+                           promptText="رمز عبور"
+                           prefWidth="290"/>
+
+            <Label fx:id="errorLabel"
+                   visible="false"
+                   managed="false"
+                   wrapText="true"
+                   styleClass="error-label"/>
+
+            <Button fx:id="loginButton"
+                    text="ورود"
+                    prefWidth="290"
+                    defaultButton="true"
+                    onAction="#login"/>
+
+            <Hyperlink text="حساب ندارید؟ ثبت‌نام کنید"
+                       onAction="#goToRegister"/>
+        </VBox>
+    </center>
+</BorderPane>

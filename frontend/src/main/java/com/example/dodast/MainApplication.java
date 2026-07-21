@@ -1,21 +1,18 @@
 package com.example.dodast;
 
+import com.example.dodast.Util.SceneManager;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application {
 
     @Override
-    public void start(Stage stage) {
-        Label label = new Label("Dodast Frontend is running");
-
-        Scene scene = new Scene(label, 600, 400);
-
+    public void start(Stage stage) throws Exception {
         stage.setTitle("Dodast");
-        stage.setScene(scene);
-        stage.show();
+        stage.setMinWidth(800);
+        stage.setMinHeight(550);
+
+        SceneManager.switchScene(stage, "login.fxml");
     }
 
     public static void main(String[] args) {
