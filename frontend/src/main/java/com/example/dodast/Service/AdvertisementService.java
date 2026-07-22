@@ -3,9 +3,7 @@ package com.example.dodast.Service;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
-import com.example.dodast.Exception.GetAdvertisementError;
-import com.example.dodast.Exception.UIException;
-
+import com.example.dodast.Exception.ExceptionCreator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,7 +29,7 @@ public class AdvertisementService {
             return mapper.readValue(response.body(), new TypeReference<List<AdvertisementResponse>>() {});
         }
 
-        throw new GetAdvertisementError(response.statusCode());
+        throw ExceptionCreator.createException(response);
     }
 
     public List<AdvertisementResponse> getMyAdvertisements() throws Exception {
@@ -42,7 +40,7 @@ public class AdvertisementService {
             return mapper.readValue(response.body(), new TypeReference<List<AdvertisementResponse>>() {});
         }
 
-        throw new UIException(response.body(), response.statusCode());
+        throw ExceptionCreator.createException(response);
     }
 
     public AdvertisementDetailResponse getAdvertisementDetail(Long advertisementId) throws Exception {
@@ -54,7 +52,7 @@ public class AdvertisementService {
             return mapper.readValue(response.body(), AdvertisementDetailResponse.class);
         }
 
-        throw new UIException(response.body(), response.statusCode());
+        throw ExceptionCreator.createException(response);
     }
 
     public void createAdvertisement(String title,
@@ -74,7 +72,7 @@ public class AdvertisementService {
                                                         image);
 
         if (!isSuccessful(response)) {
-            throw new UIException(response.body(), response.statusCode());
+            throw ExceptionCreator.createException(response);
         }
     }
 
@@ -84,7 +82,7 @@ public class AdvertisementService {
 
         HttpResponse<String> response = apiClient.put("/advertisements/" + advertisementId, requestBody);
 
-        if (!isSuccessful(response)) throw new UIException(response.body(), response.statusCode());
+        if (!isSuccessful(response)) throw ExceptionCreator.createException(response);
 
         if (response.body() == null || response.body().isBlank()) return null;
 
@@ -95,14 +93,14 @@ public class AdvertisementService {
 
         HttpResponse<String> response = apiClient.delete("/advertisements/" + advertisementId);
 
-        if (!isSuccessful(response)) throw new UIException(response.body(), response.statusCode());
+        if (!isSuccessful(response)) throw ExceptionCreator.createException(response);
     }
 
     public void markAsSold(Long advertisementId) throws Exception {
 
         HttpResponse<String> response = apiClient.patch("/advertisements/" + advertisementId + "/sold");
 
-        if (!isSuccessful(response)) throw new UIException(response.body(), response.statusCode());
+        if (!isSuccessful(response)) throw ExceptionCreator.createException(response);
     }
 
     private boolean isSuccessful(HttpResponse<String> response) {

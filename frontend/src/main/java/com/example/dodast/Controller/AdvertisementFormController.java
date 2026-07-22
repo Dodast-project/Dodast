@@ -2,7 +2,6 @@ package com.example.dodast.Controller;
 
 import java.io.File;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -12,7 +11,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
-import com.example.dodast.Exception.UIException;
+import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Model.AdvertisementFormMode;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementFormSession;
@@ -109,12 +108,12 @@ public class AdvertisementFormController {
             AdvertisementDetailResponse advertisement = advertisementService.getAdvertisementDetail(advertisementId);
             addFields(advertisement);
 
-        } catch (UIException e) {
-            showMessage(e.getMessage());
+        } catch (RuntimeException e) {
+            ShowAlert.showError(e.getMessage());
             disableForm();
 
         } catch (Exception e) {
-            showMessage("خطایی در بارگذاری آگهی پیش آمد");
+            ShowAlert.showError("خطایی در بارگذاری آگهی پیش آمد");
             disableForm();
             e.printStackTrace();
         }
@@ -173,11 +172,11 @@ public class AdvertisementFormController {
 
             showMessage("آگهی با موفقیت ثبت شد");
 
-        } catch (UIException e) {
-            showMessage(e.getMessage());
+        } catch (RuntimeException e) {
+            ShowAlert.showError(e.getMessage());
 
         } catch (Exception e) {
-            showMessage("خطایی در ارتباط با سرور پیش آمد");
+            ShowAlert.showError("خطایی در ارتباط با سرور پیش آمد");
             e.printStackTrace();
 
         } finally {
@@ -204,11 +203,11 @@ public class AdvertisementFormController {
 
             SceneManager.switchScene(getStage(), "my-advertisements.fxml");
 
-        } catch (UIException e) {
-            showMessage(e.getMessage());
+        } catch (RuntimeException e) {
+            ShowAlert.showError(e.getMessage());
 
         } catch (Exception e) {
-            showMessage("تغییرات ذخیره نشد");
+            ShowAlert.showError("تغییرات ذخیره نشد");
             e.printStackTrace();
 
         } finally {
@@ -224,7 +223,7 @@ public class AdvertisementFormController {
             SceneManager.switchScene(getStage(), NavigationSession.getPreviousPage());
 
         } catch (Exception e) {
-            showError("در بازگشت به صفحه قبل مشکلی پیش آمد");
+            ShowAlert.showError("در بازگشت به صفحه قبل مشکلی پیش آمد");
             e.printStackTrace();
         }
     }
@@ -268,13 +267,5 @@ public class AdvertisementFormController {
         messageLabel.setText("");
         messageLabel.setManaged(false);
         messageLabel.setVisible(false);
-    }
-
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("خطا");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

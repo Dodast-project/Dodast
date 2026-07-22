@@ -1,6 +1,7 @@
 package com.example.dodast.Controller;
 
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementCard;
 import com.example.dodast.Util.AdvertisementFormSession;
@@ -9,7 +10,6 @@ import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -57,7 +57,7 @@ public class MyAdvertisementsController {
             }
 
         } catch (Exception e) {
-            showError(e.getMessage() == null ? "در دریافت آگهی‌های شما مشکلی پیش آمد" : e.getMessage());
+            ShowAlert.showError(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -72,7 +72,7 @@ public class MyAdvertisementsController {
             SceneManager.switchScene(stage, "advertisement-detail.fxml");
 
         } catch (Exception e) {
-            showError("خطایی در نمایش آگهی پیش آمد");
+            ShowAlert.showError("خطایی در نمایش آگهی پیش آمد");
             e.printStackTrace();
         }
     }
@@ -86,7 +86,7 @@ public class MyAdvertisementsController {
             SceneManager.switchScene(stage, "advertisement-form.fxml");
 
         } catch (Exception e) {
-            showError("صفحه ویرایش آگهی باز نشد");
+            ShowAlert.showError("صفحه ویرایش آگهی باز نشد");
             e.printStackTrace();
         }
     }
@@ -97,7 +97,7 @@ public class MyAdvertisementsController {
             loadMyAdvertisements();
             showMessage("آگهی با موفقیت حذف شد");
         } catch (Exception e) {
-            showError("در حذف آگهی مشکلی پیش آمد");
+            ShowAlert.showError("در حذف آگهی مشکلی پیش آمد");
             e.printStackTrace();
         }
        
@@ -110,7 +110,7 @@ public class MyAdvertisementsController {
             loadMyAdvertisements();
             showMessage("وضعیت آگهی به فروخته‌شده تغییر کرد");
         } catch (Exception e) {
-            showError(e.getMessage() == null ? "خطایی در تغییر وضعیت آگهی رخ داد" : e.getMessage());
+            ShowAlert.showError(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -120,22 +120,13 @@ public class MyAdvertisementsController {
         try {
             SceneManager.switchScene(getStage(), "home.fxml");
         } catch (Exception e) {
-            showError("در بازگشت به صفحه اصلی مشکلی پیش آمد");
+            ShowAlert.showError("در بازگشت به صفحه اصلی مشکلی پیش آمد");
             e.printStackTrace();
         }
     }
 
     private Stage getStage() {
         return (Stage) advertisementsPane.getScene().getWindow();
-    }
-
-    private void showError(String message) {
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("خطا");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void showMessage(String message) {
