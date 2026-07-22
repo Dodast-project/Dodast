@@ -276,7 +276,7 @@ public class AdvertisementService {
 
         User currentUser = AdAuthenticator.getCurrentUser();
 
-        List<Advertisement> advertisements = advertisementRepository.findByOwner(currentUser);
+        List<Advertisement> advertisements = advertisementRepository.findByOwnerAndStatusNot(currentUser, AdvertisementStatus.DELETED);
 
         List<AdvertisementResponse> responses = new ArrayList<>();
 
