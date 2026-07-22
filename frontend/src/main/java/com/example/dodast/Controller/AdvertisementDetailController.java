@@ -121,6 +121,7 @@ public class AdvertisementDetailController {
 
         } catch (Exception e) {
             showMessage("خطایی در نمایش تصویر رخ داد");
+            e.printStackTrace();
         }
     }
 
