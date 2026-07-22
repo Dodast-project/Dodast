@@ -31,7 +31,8 @@
             <Button text="ثبت آگهی"
                     onAction="#openCreateAdvertisement"/>
                 
-            <Button text="علاقه‌مندی‌ها"/>
+            <Button text="علاقه‌مندی‌ها"
+                    onAction="#showFavorites"/>
 
             <Button text="خروج"
                     onAction="#logout"/>

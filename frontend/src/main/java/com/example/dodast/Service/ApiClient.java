@@ -34,6 +34,20 @@ public class ApiClient {
         return send(request);
     }
 
+    public HttpResponse<String> delete(String url) throws Exception {
+
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + url));
+
+        if (SessionManager.isLoggedIn()) {
+            builder.header("Authorization","Bearer " + SessionManager.getToken());
+        }
+
+        HttpRequest request = builder.DELETE().build();
+
+        return client.send(request,HttpResponse.BodyHandlers.ofString());
+    }
+
     public HttpResponse<String> postAdvertisement(String title,
             String description,
             String price,
