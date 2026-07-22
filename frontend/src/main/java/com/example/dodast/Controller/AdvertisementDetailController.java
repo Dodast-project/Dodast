@@ -5,6 +5,7 @@ import com.example.dodast.DTO.Advertisement.ImageResponse;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Service.FavoriteService;
 import com.example.dodast.Util.AdvertisementSession;
+import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
 
 import javafx.fxml.FXML;
@@ -130,7 +131,7 @@ public class AdvertisementDetailController {
 
             Stage stage = (Stage) titleLabel.getScene().getWindow();
 
-            SceneManager.switchScene(stage, "home.fxml");
+            SceneManager.switchScene(stage, NavigationSession.getPreviousPage());
 
         } catch (Exception e) {
             showMessage("خطا در بازگشت به صفحه اصلی");
