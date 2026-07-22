@@ -34,6 +34,9 @@
             <Button text="علاقه‌مندی‌ها"
                     onAction="#showFavorites"/>
 
+            <Button text="آگهی‌های من"
+                    onAction="#openMyAdvertisements"/>
+
             <Button text="خروج"
                     onAction="#logout"/>
         </HBox>
