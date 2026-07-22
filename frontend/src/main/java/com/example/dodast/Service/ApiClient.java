@@ -34,26 +34,21 @@ public class ApiClient {
         return send(request);
     }
 
-    public HttpResponse<String> delete(String url) throws Exception {
+    public HttpResponse<String> delete(String path) throws Exception {
 
-        HttpRequest.Builder builder = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + url));
+        HttpRequest request = baseRequest(path)
+                .DELETE()
+                .build();
 
-        if (SessionManager.isLoggedIn()) {
-            builder.header("Authorization","Bearer " + SessionManager.getToken());
-        }
-
-        HttpRequest request = builder.DELETE().build();
-
-        return client.send(request,HttpResponse.BodyHandlers.ofString());
+        return send(request);
     }
 
     public HttpResponse<String> postAdvertisement(String title,
             String description,
-            String price,
-            String categoryId,
-            String provinceId,
-            String cityId,
+            Long price,
+            Long categoryId,
+            Long provinceId,
+            Long cityId,
             File image) throws Exception {
 
         String boundary = UUID.randomUUID().toString();
@@ -62,10 +57,10 @@ public class ApiClient {
 
         addTextPart(parts, boundary, "title", title);
         addTextPart(parts, boundary, "description", description);
-        addTextPart(parts, boundary, "price", price);
-        addTextPart(parts, boundary, "categoryId", categoryId);
-        addTextPart(parts, boundary, "provinceId", provinceId);
-        addTextPart(parts, boundary, "cityId", cityId);
+        addTextPart(parts, boundary, "price", String.valueOf(price));
+        addTextPart(parts, boundary, "categoryId", String.valueOf(categoryId));
+        addTextPart(parts, boundary, "provinceId", String.valueOf(provinceId));
+        addTextPart(parts, boundary, "cityId", String.valueOf(cityId));
 
         if (image != null) {
             addFilePart(parts, boundary, image);
@@ -76,6 +71,25 @@ public class ApiClient {
         HttpRequest request = baseRequest("/advertisements")
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                 .POST(HttpRequest.BodyPublishers.concat(parts.toArray(new HttpRequest.BodyPublisher[0])))
+                .build();
+
+        return send(request);
+    }
+
+    public HttpResponse<String> put(String path, String jsonBody) throws Exception {
+
+        HttpRequest request = baseRequest(path)
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        return send(request);
+    }
+
+    public HttpResponse<String> patch(String path)throws Exception {
+
+        HttpRequest request = baseRequest(path)
+                .method("PATCH", HttpRequest.BodyPublishers.noBody())
                 .build();
 
         return send(request);
