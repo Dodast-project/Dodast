@@ -4,6 +4,7 @@ import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementCard;
 import com.example.dodast.Util.AdvertisementSession;
+import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
 import com.example.dodast.Util.SessionManager;
 import javafx.fxml.FXML;
@@ -42,6 +43,7 @@ public class HomeController implements Initializable {
 
     private void showAdvertisementDetail(Long advertisementId) {
         try {
+            NavigationSession.setPreviousPage("home.fxml");
             AdvertisementSession.setSelectedAdvertisementId(advertisementId);
 
             Stage stage = (Stage) advertisementsPane.getScene().getWindow();
