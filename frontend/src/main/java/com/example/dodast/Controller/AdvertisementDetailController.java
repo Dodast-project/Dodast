@@ -3,10 +3,12 @@ package com.example.dodast.Controller;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.ImageResponse;
 import com.example.dodast.Service.AdvertisementService;
+import com.example.dodast.Service.FavoriteService;
 import com.example.dodast.Util.AdvertisementSession;
 import com.example.dodast.Util.SceneManager;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,16 +32,18 @@ public class AdvertisementDetailController {
     private Label categoryLabel;
 
     @FXML
-    private Label favoriteLabel;
-
-    @FXML
     private Label messageLabel;
 
     @FXML
     private ImageView advertisementImage;
 
-    private final AdvertisementService advertisementService =
-            new AdvertisementService();
+    private final AdvertisementService advertisementService = new AdvertisementService();
+    private final FavoriteService favoriteService = new FavoriteService();
+
+    @FXML
+    private Button favoriteButton;
+
+    private boolean favorite;
 
     @FXML
     private void initialize() {
@@ -72,6 +76,10 @@ public class AdvertisementDetailController {
 
         titleLabel.setText(safeText(advertisement.getTitle()));
 
+        favorite = advertisement.isFavorite();
+        
+        updateFavoriteButton(favorite);
+
         descriptionLabel.setText(safeText(advertisement.getDescription()));
 
         if (advertisement.getPrice() != null) {
@@ -83,8 +91,6 @@ public class AdvertisementDetailController {
         locationLabel.setText(safeText(advertisement.getProvince()) + "، "+ safeText(advertisement.getCity()));
 
         categoryLabel.setText("دسته‌بندی: " + safeText(advertisement.getCategory()));
-
-        favoriteLabel.setText(advertisement.isFavorite() ? "در علاقه‌مندی‌ها" : "در علاقه‌مندی‌ها نیست");
 
         loadFirstImage(advertisement);
     }
@@ -132,6 +138,38 @@ public class AdvertisementDetailController {
         }
     }
 
+    @FXML
+    private void toggleFavorite() {
+
+        Long advertisementId = AdvertisementSession.getSelectedAdvertisementId();
+
+        if (advertisementId == null) {
+            showMessage("در گرفتن شناسه آگهی مشکلی پیش آمد");
+            return;
+        }
+
+        favoriteButton.setDisable(true);
+        hideError();
+
+        try {
+            if (favorite) {
+                favoriteService.removeFavorite(advertisementId);
+                favorite = false;
+            } else {
+                favoriteService.addFavorite(advertisementId);
+                favorite = true;
+            }
+
+            updateFavoriteButton(favorite);
+
+        } catch (Exception e) {
+            showMessage(e.getMessage() == null ? "خطا در تغییر وضعیت علاقه‌مندی" : e.getMessage());
+            e.printStackTrace();
+        } finally {
+            favoriteButton.setDisable(false);
+        }
+    }
+
     private String safeText(String value) {
 
         if (value == null || value.isBlank()) return "نامشخص";
@@ -151,5 +189,14 @@ public class AdvertisementDetailController {
         messageLabel.setText("");
         messageLabel.setVisible(false);
         messageLabel.setManaged(false);
+    }
+
+    private void updateFavoriteButton(boolean favorite) {
+
+        if (favorite) {
+            favoriteButton.setText("❤ حذف از علاقه‌مندی‌ها");
+        } else {
+            favoriteButton.setText("♡ افزودن به علاقه‌مندی‌ها");
+        }
     }
 }
