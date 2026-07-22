@@ -44,7 +44,10 @@ public class FavoritesController {
             }
 
             for (AdvertisementResponse advertisement : favorites) {
-                favoritesPane.getChildren().add(AdvertisementCard.createAdvertisementCard(advertisement, () -> showAdvertisementDetail(advertisement.getId())));
+                AdvertisementCard advertisementCard = new AdvertisementCard(advertisement, () -> showAdvertisementDetail(advertisement.getId()));
+                favoritesPane.getChildren().add(advertisementCard.getView());
+                advertisementCard.setShowStatus(true);
+                advertisementCard.setShowManagementButtons(false);
             }
 
         } catch (Exception e) {
