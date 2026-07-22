@@ -202,7 +202,7 @@ public class AdvertisementFormController {
 
             AdvertisementFormSession.clear();
 
-            showMessage("تغییرات با موفقیت ذخیره شد");
+            SceneManager.switchScene(getStage(), "my-advertisements.fxml");
 
         } catch (UIException e) {
             showMessage(e.getMessage());
