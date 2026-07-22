@@ -2,6 +2,7 @@ package com.example.dodast.Controller;
 
 import com.example.dodast.Util.AdvertisementCard;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.FavoriteService;
 import com.example.dodast.Util.AdvertisementSession;
 import com.example.dodast.Util.NavigationSession;
@@ -51,7 +52,7 @@ public class FavoritesController {
             }
 
         } catch (Exception e) {
-            showMessage(e.getMessage() == null ? "خطا در دریافت علاقه‌مندی‌ها" : e.getMessage());
+            ShowAlert.showError(e.getMessage() == null ? "خطا در دریافت علاقه‌مندی‌ها" : e.getMessage());
             e.printStackTrace();
         }
     }
@@ -65,7 +66,7 @@ public class FavoritesController {
             SceneManager.switchScene(stage, "advertisement-detail.fxml");
         }
         catch(Exception e){
-            showMessage("خطایی در نشان دادن آگهی پیش آمد");
+            ShowAlert.showError("خطایی در نشان دادن آگهی پیش آمد");
             e.printStackTrace();
         }
         
@@ -77,7 +78,7 @@ public class FavoritesController {
             Stage stage = (Stage) favoritesPane.getScene().getWindow();
             SceneManager.switchScene(stage, "home.fxml");
         } catch (Exception e) {
-            showMessage("خطایی در برگشت به خانه پیش آمد");
+            ShowAlert.showError("خطایی در برگشت به خانه پیش آمد");
             e.printStackTrace();
         }
         

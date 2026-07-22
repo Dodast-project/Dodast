@@ -1,6 +1,7 @@
 package com.example.dodast.Controller;
 
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementCard;
 import com.example.dodast.Util.AdvertisementFormSession;
@@ -49,7 +50,7 @@ public class HomeController implements Initializable {
             SceneManager.switchScene(stage, "advertisement-detail.fxml");
 
         } catch (Exception e) {
-            showError("خطایی در نشان دادن آگهی پیش آمد");
+            ShowAlert.showError("خطایی در نشان دادن آگهی پیش آمد");
             e.printStackTrace();
         }
     }
@@ -57,7 +58,7 @@ public class HomeController implements Initializable {
     private void loadAdvertisements() {
 
         advertisementsPane.getChildren().clear();
-        hideError();
+        hideMessage();
 
         try {
             
@@ -77,7 +78,7 @@ public class HomeController implements Initializable {
             }
 
         } catch (Exception e) {
-            showError("در بارگذاری آگهی مشکلی پیش آمد");
+            ShowAlert.showError("در بارگذاری آگهی مشکلی پیش آمد");
             e.printStackTrace();
         }
     }
@@ -93,7 +94,7 @@ public class HomeController implements Initializable {
             SceneManager.switchScene(stage, "login.fxml");
 
         } catch (Exception e) {
-            showError("در خروج مشکلی پیش آمد");
+            ShowAlert.showError("در خروج مشکلی پیش آمد");
             e.printStackTrace();
         }
     }
@@ -104,7 +105,7 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) advertisementsPane.getScene().getWindow();
             SceneManager.switchScene(stage, "favorites.fxml");
         } catch (Exception e) {
-            showError("خطایی در نشان دادن علاقه‌مندی ها پیش آمد");
+            ShowAlert.showError("خطایی در نشان دادن علاقه‌مندی ها پیش آمد");
             e.printStackTrace();
         }
         
@@ -116,7 +117,7 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) advertisementsPane.getScene().getWindow();
             SceneManager.switchScene(stage, "my-advertisements.fxml");
         } catch (Exception e) {
-            showError("در باز نشان دادن آگهی های شما مشکلی پیش آمد");
+            ShowAlert.showError("در باز نشان دادن آگهی های شما مشکلی پیش آمد");
             e.printStackTrace();
         }
     }
@@ -131,22 +132,12 @@ public class HomeController implements Initializable {
             SceneManager.switchScene(stage,"advertisement-form.fxml");
 
         } catch (Exception e) {
-            showError("خطایی در ورود به صفحه درست کردن آگهی پیش آمد");
+            ShowAlert.showError("خطایی در ورود به صفحه درست کردن آگهی پیش آمد");
             e.printStackTrace();
         }
     }
 
-
-    private void showError(String message) {
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("خطا");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void hideError() {
+    private void hideMessage() {
         messageLabel.setManaged(false);
         messageLabel.setVisible(false);
     }

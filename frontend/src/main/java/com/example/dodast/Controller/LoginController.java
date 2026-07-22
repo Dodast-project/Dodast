@@ -1,6 +1,7 @@
 package com.example.dodast.Controller;
 
 import com.example.dodast.DTO.Auth.LoginRequest;
+import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.AuthService;
 import com.example.dodast.Util.SceneManager;
 import javafx.fxml.FXML;
@@ -29,13 +30,11 @@ public class LoginController {
     @FXML
     private void login() {
 
-        hideError();
-
         String identifier = identifierField.getText().trim();
         String password = passwordField.getText();
 
         if (identifier.isBlank() || password.isBlank()) {
-            showError("وارد  کردن نام کاربری و رمز عبور الزامی است");
+            ShowAlert.showError("وارد  کردن نام کاربری و رمز عبور الزامی است");
             return;
         }
 
@@ -50,7 +49,7 @@ public class LoginController {
             SceneManager.switchScene(stage, "home.fxml");
 
         } catch (Exception e) {
-            showError(e.getMessage());
+            ShowAlert.showError(e.getMessage());
 
         } finally {
             loginButton.setDisable(false);
@@ -62,7 +61,7 @@ public class LoginController {
         try {
             SceneManager.switchScene(currentStage(),"register.fxml");
         } catch (Exception e) {
-            showError(e.getMessage());
+            ShowAlert.showError(e.getMessage());
         }
     }
 
@@ -70,14 +69,4 @@ public class LoginController {
         return (Stage) identifierField.getScene().getWindow();
     }
 
-    private void showError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setManaged(true);
-        errorLabel.setVisible(true);
-    }
-
-    private void hideError() {
-        errorLabel.setManaged(false);
-        errorLabel.setVisible(false);
-    }
 }

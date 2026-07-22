@@ -1,6 +1,7 @@
 package com.example.dodast.Controller;
 
 import com.example.dodast.DTO.Auth.RegisterRequest;
+import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.AuthService;
 import com.example.dodast.Util.SceneManager;
 import javafx.fxml.FXML;
@@ -30,13 +31,12 @@ public class RegisterController {
     @FXML
     private Button registerButton;
 
-    private final AuthService authService =
-            new AuthService();
+    private final AuthService authService = new AuthService();
 
     @FXML
     private void register() {
 
-        hideError();
+        hideMessage();
 
         String fullName = fullNameField.getText().trim();
         String username = usernameField.getText().trim();
@@ -44,8 +44,7 @@ public class RegisterController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
-        String validationError = validate(
-                fullName,
+        String validationError = validate(fullName,
                 username,
                 email,
                 password,
@@ -60,8 +59,7 @@ public class RegisterController {
         try {
             registerButton.setDisable(true);
 
-            RegisterRequest request = new RegisterRequest(
-                            fullName,
+            RegisterRequest request = new RegisterRequest(fullName,
                             username,
                             email,
                             password
@@ -72,7 +70,7 @@ public class RegisterController {
             SceneManager.switchScene(currentStage(), "home.fxml");
 
         } catch (Exception e) {
-            showError(e.getMessage());
+            ShowAlert.showError(e.getMessage());
 
         } finally {
             registerButton.setDisable(false);
@@ -84,12 +82,11 @@ public class RegisterController {
         try {
             SceneManager.switchScene(currentStage(), "login.fxml");
         } catch (Exception e) {
-            showError(e.getMessage());
+            ShowAlert.showError(e.getMessage());
         }
     }
 
-    private String validate(
-            String fullName,
+    private String validate(String fullName,
             String username,
             String email,
             String password,
@@ -128,7 +125,7 @@ public class RegisterController {
         errorLabel.setVisible(true);
     }
 
-    private void hideError() {
+    private void hideMessage() {
         errorLabel.setManaged(false);
         errorLabel.setVisible(false);
     }
