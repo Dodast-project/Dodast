@@ -4,6 +4,7 @@ import com.example.dodast.Util.AdvertisementCard;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Service.FavoriteService;
 import com.example.dodast.Util.AdvertisementSession;
+import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
 
 import javafx.fxml.FXML;
@@ -56,6 +57,7 @@ public class FavoritesController {
 
         try{
             AdvertisementSession.setSelectedAdvertisementId(advertisementId);
+            NavigationSession.setPreviousPage("favorites.fxml");
             Stage stage = (Stage) favoritesPane.getScene().getWindow();
             SceneManager.switchScene(stage, "advertisement-detail.fxml");
         }
