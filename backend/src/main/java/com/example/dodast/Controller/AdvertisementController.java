@@ -83,6 +83,11 @@ public class AdvertisementController {
     public List<AdvertisementResponse> getPendingAdvertisements() {
         return advertisementService.getPendingAdvertisements();
     }
+
+    @GetMapping("/me")
+    public List<AdvertisementResponse> getMyAdvertisements() {
+        return advertisementService.getMyAdvertisements();
+    }
     
 
 }
