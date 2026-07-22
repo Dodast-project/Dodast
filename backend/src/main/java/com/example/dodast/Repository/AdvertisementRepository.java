@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
 
-    List<Advertisement> findByOwner(User owner);
+    List<Advertisement> findByOwnerAndStatusNot(User owner, AdvertisementStatus status);
 
     List<Advertisement> findByCategory(Category category);
 
