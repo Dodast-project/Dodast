@@ -95,6 +95,18 @@ public class HomeController implements Initializable {
         }
     }
 
+    @FXML
+    private void showFavorites() {
+        try {
+            Stage stage = (Stage) advertisementsPane.getScene().getWindow();
+            SceneManager.switchScene(stage, "favorites.fxml");
+        } catch (Exception e) {
+            showMessage("خطایی در نشان دادن علاقه‌مندی ها پیش آمد");
+            e.printStackTrace();
+        }
+        
+    }
+
     private void setLoading(boolean loading) {
         loadingIndicator.setManaged(loading);
         loadingIndicator.setVisible(loading);
