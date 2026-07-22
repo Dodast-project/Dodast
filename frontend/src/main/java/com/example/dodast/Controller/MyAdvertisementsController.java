@@ -1,14 +1,16 @@
 package com.example.dodast.Controller;
 
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
-import com.example.dodast.Service.MyAdvertisementsService;
+import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementCard;
+import com.example.dodast.Util.AdvertisementFormSession;
 import com.example.dodast.Util.AdvertisementSession;
 import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
@@ -19,7 +21,10 @@ public class MyAdvertisementsController {
     @FXML
     private FlowPane advertisementsPane;
 
-    private final MyAdvertisementsService myAdvertisementsService = new MyAdvertisementsService();
+    @FXML
+    private Label messageLabel;
+
+    private final AdvertisementService advertisementService = new AdvertisementService();
 
     @FXML
     public void initialize() {
@@ -27,21 +32,32 @@ public class MyAdvertisementsController {
     }
 
     private void loadMyAdvertisements() {
+        advertisementsPane.getChildren().clear();
+        hideMessage();
 
         try {
-            List<AdvertisementResponse> advertisements = myAdvertisementsService.getMyAdvertisements();
+            List<AdvertisementResponse> advertisements =advertisementService.getMyAdvertisements();
 
-            advertisementsPane.getChildren().clear();
+            if (advertisements == null || advertisements.isEmpty()) {
+                showMessage("هنوز آگهی‌ای ثبت نکردید");
+                return;
+            }
 
             for (AdvertisementResponse advertisement : advertisements) {
+
                 AdvertisementCard advertisementCard = new AdvertisementCard(advertisement, () -> showAdvertisementDetail(advertisement.getId()));
-                advertisementsPane.getChildren().add(advertisementCard.getView());
+
                 advertisementCard.setShowStatus(true);
                 advertisementCard.setShowManagementButtons(true);
+                advertisementCard.setOnEdit(() -> openEditAdvertisement(advertisement.getId()));
+                advertisementCard.setOnDelete(() -> deleteAdvertisement(advertisement.getId()));
+                advertisementCard.setOnMarkAsSold(() -> markAdvertisementAsSold(advertisement.getId()));
+
+                advertisementsPane.getChildren().add(advertisementCard.getView());
             }
 
         } catch (Exception e) {
-            showError("در دریافت آگهی شما مشکلی پیش آمد");
+            showError(e.getMessage() == null ? "در دریافت آگهی‌های شما مشکلی پیش آمد" : e.getMessage());
             e.printStackTrace();
         }
     }
@@ -51,24 +67,66 @@ public class MyAdvertisementsController {
         try {
             AdvertisementSession.setSelectedAdvertisementId(advertisementId);
             NavigationSession.setPreviousPage("my-advertisements.fxml");
-            Stage stage = (Stage) advertisementsPane.getScene().getWindow();
+
+            Stage stage = getStage();
             SceneManager.switchScene(stage, "advertisement-detail.fxml");
+
         } catch (Exception e) {
-            
+            showError("خطایی در نمایش آگهی پیش آمد");
+            e.printStackTrace();
         }
-        
+    }
+
+    private void openEditAdvertisement(Long advertisementId) {
+
+        try {
+            AdvertisementFormSession.openEdit(advertisementId);
+
+            Stage stage = getStage();
+            SceneManager.switchScene(stage, "advertisement-form.fxml");
+
+        } catch (Exception e) {
+            showError("صفحه ویرایش آگهی باز نشد");
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteAdvertisement(Long advertisementId) {
+        try {
+            advertisementService.deleteAdvertisement(advertisementId);
+            loadMyAdvertisements();
+            showMessage("آگهی با موفقیت حذف شد");
+        } catch (Exception e) {
+            showError("در حذف آگهی مشکلی پیش آمد");
+            e.printStackTrace();
+        }
+       
+    }
+
+    private void markAdvertisementAsSold(Long advertisementId) {
+
+        try {
+            advertisementService.markAsSold(advertisementId);
+            loadMyAdvertisements();
+            showMessage("وضعیت آگهی به فروخته‌شده تغییر کرد");
+        } catch (Exception e) {
+            showError(e.getMessage() == null ? "خطایی در تغییر وضعیت آگهی رخ داد" : e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleBack() {
         try {
-            Stage stage = (Stage) advertisementsPane.getScene().getWindow();
-            SceneManager.switchScene(stage, "home.fxml");
+            SceneManager.switchScene(getStage(), "home.fxml");
         } catch (Exception e) {
-            showError("در بازگشت به صفحه قبل مشکلی پیش آمد");
+            showError("در بازگشت به صفحه اصلی مشکلی پیش آمد");
             e.printStackTrace();
         }
-        
+    }
+
+    private Stage getStage() {
+        return (Stage) advertisementsPane.getScene().getWindow();
     }
 
     private void showError(String message) {
@@ -78,5 +136,17 @@ public class MyAdvertisementsController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void showMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setManaged(true);
+        messageLabel.setVisible(true);
+    }
+
+    private void hideMessage() {
+        messageLabel.setText("");
+        messageLabel.setManaged(false);
+        messageLabel.setVisible(false);
     }
 }
