@@ -272,5 +272,31 @@ public class AdvertisementService {
         return favoriteRepository.existsByUserIdAndAdvertisementId(user.getId(), advertisementId);
         }
 
+     public List<AdvertisementResponse> getMyAdvertisements() {
+
+        User currentUser = AdAuthenticator.getCurrentUser();
+
+        List<Advertisement> advertisements = advertisementRepository.findByOwnerAndStatusNot(currentUser, AdvertisementStatus.DELETED);
+
+        List<AdvertisementResponse> responses = new ArrayList<>();
+
+        for (Advertisement advertisement : advertisements) {
+
+                AdvertisementResponse adResponse = new AdvertisementResponse(
+                        advertisement.getId(), 
+                        advertisement.getTitle(), 
+                        advertisement.getPrice(), 
+                        advertisement.getCity().getName(), 
+                        advertisement.getStatus(),
+                        getFirstImage(advertisement),
+                        isFavorite(advertisement.getId())
+                );
+
+                responses.add(adResponse);
+        }
+
+        return responses;
+     }
+
 }
 

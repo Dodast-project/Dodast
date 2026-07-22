@@ -3,6 +3,7 @@ package com.example.dodast.Controller;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Util.AdvertisementCard;
+import com.example.dodast.Util.AdvertisementFormSession;
 import com.example.dodast.Util.AdvertisementSession;
 import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
@@ -24,9 +25,6 @@ public class HomeController implements Initializable {
 
     @FXML
     private FlowPane advertisementsPane;
-
-    @FXML
-    private ProgressIndicator loadingIndicator;
 
     @FXML
     private Label messageLabel;
@@ -51,17 +49,18 @@ public class HomeController implements Initializable {
             SceneManager.switchScene(stage, "advertisement-detail.fxml");
 
         } catch (Exception e) {
+            showError("خطایی در نشان دادن آگهی پیش آمد");
             e.printStackTrace();
         }
     }
 
     private void loadAdvertisements() {
 
-        setLoading(true);
         advertisementsPane.getChildren().clear();
         hideError();
 
         try {
+            
             List<AdvertisementResponse> advertisements = advertisementService.getActiveAdvertisements();
 
             if (advertisements.isEmpty()) {
@@ -71,14 +70,15 @@ public class HomeController implements Initializable {
 
             for (AdvertisementResponse advertisement : advertisements) {
 
-                advertisementsPane.getChildren().add(AdvertisementCard.createAdvertisementCard(advertisement, () -> showAdvertisementDetail(advertisement.getId())));
+                AdvertisementCard advertisementCard = new AdvertisementCard(advertisement, () -> showAdvertisementDetail(advertisement.getId()));
+                advertisementsPane.getChildren().add(advertisementCard.getView());
+                advertisementCard.setShowStatus(false);
+                advertisementCard.setShowManagementButtons(false);
             }
 
         } catch (Exception e) {
-            showMessage(e.getMessage());
-
-        } finally {
-            setLoading(false);
+            showError("در بارگذاری آگهی مشکلی پیش آمد");
+            e.printStackTrace();
         }
     }
 
@@ -93,7 +93,8 @@ public class HomeController implements Initializable {
             SceneManager.switchScene(stage, "login.fxml");
 
         } catch (Exception e) {
-            showMessage(e.getMessage());
+            showError("در خروج مشکلی پیش آمد");
+            e.printStackTrace();
         }
     }
 
@@ -103,26 +104,21 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) advertisementsPane.getScene().getWindow();
             SceneManager.switchScene(stage, "favorites.fxml");
         } catch (Exception e) {
-            showMessage("خطایی در نشان دادن علاقه‌مندی ها پیش آمد");
+            showError("خطایی در نشان دادن علاقه‌مندی ها پیش آمد");
             e.printStackTrace();
         }
         
     }
 
-    private void setLoading(boolean loading) {
-        loadingIndicator.setManaged(loading);
-        loadingIndicator.setVisible(loading);
-    }
-
-    private void showMessage(String message) {
-        messageLabel.setText(message);
-        messageLabel.setManaged(true);
-        messageLabel.setVisible(true);
-    }
-
-    private void hideError() {
-        messageLabel.setManaged(false);
-        messageLabel.setVisible(false);
+    @FXML
+    private void openMyAdvertisements() {
+        try {
+            Stage stage = (Stage) advertisementsPane.getScene().getWindow();
+            SceneManager.switchScene(stage, "my-advertisements.fxml");
+        } catch (Exception e) {
+            showError("در باز نشان دادن آگهی های شما مشکلی پیش آمد");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -131,12 +127,33 @@ public class HomeController implements Initializable {
         try {
             Stage stage = (Stage) usernameLabel.getScene().getWindow();
 
-            SceneManager.switchScene(stage, "create-advertisement.fxml");
+            AdvertisementFormSession.openCreate();
+            SceneManager.switchScene(stage,"advertisement-form.fxml");
 
         } catch (Exception e) {
-            showMessage(e.getMessage());
+            showError("خطایی در ورود به صفحه درست کردن آگهی پیش آمد");
+            e.printStackTrace();
         }
     }
 
-    
+
+    private void showError(String message) {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("خطا");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void hideError() {
+        messageLabel.setManaged(false);
+        messageLabel.setVisible(false);
+    }
+
+    private void showMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setManaged(true);
+        messageLabel.setVisible(true);
+    }
 }

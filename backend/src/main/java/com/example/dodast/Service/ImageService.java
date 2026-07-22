@@ -6,6 +6,7 @@ import com.example.dodast.Exception.ImageUploadException;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.UUID;
 
 @Service
 public class ImageService {
@@ -29,7 +30,7 @@ public class ImageService {
                 Files.createDirectories(directory);
             }
 
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            String fileName = UUID.randomUUID().toString();
 
             Path filePath = directory.resolve(fileName);
 
