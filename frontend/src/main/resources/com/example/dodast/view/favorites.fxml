@@ -32,9 +32,6 @@
             <Label text="علاقه‌مندی‌های من"
                    style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-            <Button text="بروزرسانی"
-                    onAction="#refreshFavorites"/>
-
         </HBox>
     </top>
 
