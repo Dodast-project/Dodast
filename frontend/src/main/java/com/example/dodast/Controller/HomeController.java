@@ -212,6 +212,19 @@ public class HomeController implements Initializable {
         }
     }
 
+    @FXML
+    private void goToMessages() {
+
+        try {
+            Stage stage = (Stage) usernameLabel.getScene().getWindow();
+
+            SceneManager.switchScene(stage, "messages.fxml");
+
+        } catch (Exception e) {
+            ShowAlert.showError(e.getMessage());
+        }
+    }
+
     private void showAdvertisements(List<AdvertisementResponse> advertisements){
 
         advertisementsPane.getChildren().clear();

@@ -38,4 +38,29 @@ public final class SceneManager {
         stage.centerOnScreen();
         stage.show();
     }
+
+    public static Object switchSceneReturningController(Stage stage, String fxmlFile) throws IOException {
+
+        URL resource = SceneManager.class.getResource(VIEW_PATH + fxmlFile);
+
+        if (resource == null) {
+            throw new IOException("FXML file not found: " + fxmlFile);
+        }
+
+        FXMLLoader loader = new FXMLLoader(resource);
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root, 900, 600);
+
+        URL css = SceneManager.class.getResource(VIEW_PATH + "app.css");
+        if (css != null) {
+            scene.getStylesheets().add(css.toExternalForm());
+        }
+
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+
+        return loader.getController();
+    }
 }

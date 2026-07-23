@@ -30,6 +30,8 @@
 
             <Button text="ثبت آگهی"
                     onAction="#openCreateAdvertisement"/>
+
+            <Button text="پیام‌ها" onAction="#goToMessages"/>
                 
             <Button text="علاقه‌مندی‌ها"
                     onAction="#showFavorites"/>
