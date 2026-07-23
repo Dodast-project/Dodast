@@ -2,6 +2,7 @@ package com.example.dodast.Service;
 
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
+import com.example.dodast.DTO.Advertisement.OptionResponse;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
 import com.example.dodast.Exception.ExceptionCreator;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -123,6 +124,72 @@ public class AdvertisementService {
 
         if (isSuccessful(response)) {
             return mapper.readValue(response.body(), new TypeReference<List<AdvertisementResponse>>() {});
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
+    public List<OptionResponse> getCategories() throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/categories");
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), new TypeReference<List<OptionResponse>>() {});
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
+    public List<OptionResponse> getProvinces() throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/provinces");
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), new TypeReference<List<OptionResponse>>() {});
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
+    public List<OptionResponse> getCities(Long provinceId) throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/cities/" + provinceId);
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), new TypeReference<List<OptionResponse>>() {});
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
+    public OptionResponse getCategoryById(Long categoryId) throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/category/" + categoryId);
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), OptionResponse.class);
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
+    public OptionResponse getProvinceById(Long provinceId) throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/province/" + provinceId);
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), OptionResponse.class);
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
+    public OptionResponse getCityById(Long cityId) throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/city/" + cityId);
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), OptionResponse.class);
         }
 
         throw ExceptionCreator.createException(response);

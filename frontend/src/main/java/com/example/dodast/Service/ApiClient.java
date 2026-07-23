@@ -95,6 +95,17 @@ public class ApiClient {
         return send(request);
     }
 
+    public HttpResponse<String> getWithQuery(String url) throws Exception {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + url))
+                .header("Authorization", "Bearer " + SessionManager.getToken())
+                .GET()
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
     private HttpRequest.Builder baseRequest(String path) {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + path))
