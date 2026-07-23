@@ -5,6 +5,7 @@ import com.example.dodast.DTO.Advertisement.ImageResponse;
 import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.AdvertisementService;
 import com.example.dodast.Service.FavoriteService;
+import com.example.dodast.Service.MessageApiService;
 import com.example.dodast.Util.AdvertisementSession;
 import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
@@ -12,9 +13,11 @@ import com.example.dodast.Util.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import java.util.Optional;
 import com.example.dodast.Controller.RatingDialogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -46,6 +49,7 @@ public class AdvertisementDetailController {
 
     private final AdvertisementService advertisementService = new AdvertisementService();
     private final FavoriteService favoriteService = new FavoriteService();
+    private final MessageApiService messageApiService = new MessageApiService();
 
     @FXML
     private Button favoriteButton;
@@ -99,7 +103,7 @@ public class AdvertisementDetailController {
             ShowAlert.showError("خطایی در بارگذاری دسته‌بندی یا شهر یا استان آگهی پیش آمد");
             e.printStackTrace();
         }
-        
+
         loadFirstImage(advertisement);
     }
 
@@ -197,6 +201,39 @@ public class AdvertisementDetailController {
 
         } catch (Exception e) {
             ShowAlert.showError("در باز کردن پنجره امتیازدهی مشکلی پیش آمد");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openMessageSellerDialog() {
+
+        Long advertisementId = AdvertisementSession.getSelectedAdvertisementId();
+
+        if (advertisementId == null) {
+            ShowAlert.showError("شناسه آگهی مشخص نیست");
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("پیام به فروشنده");
+        dialog.setHeaderText(null);
+        dialog.setContentText("متن پیام:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isEmpty() || result.get().trim().isBlank()) {
+            return;
+        }
+
+        try {
+            messageApiService.sendMessage(advertisementId, result.get().trim());
+
+            Stage stage = (Stage) titleLabel.getScene().getWindow();
+            SceneManager.switchScene(stage, "messages.fxml");
+
+        } catch (Exception e) {
+            ShowAlert.showError(e.getMessage() != null ? e.getMessage() : "خطا در ارسال پیام به فروشنده");
             e.printStackTrace();
         }
     }
