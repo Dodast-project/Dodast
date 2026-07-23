@@ -32,9 +32,9 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
             FROM Advertisement advert
             WHERE advert.status = :status
             AND (
-                :keyword IS NULL 
-                OR LOWER(advert.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
-                OR LOWER(advert.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                CAST(:keyword AS text) IS NULL 
+                OR LOWER(advert.title) LIKE LOWER(CONCAT('%', CAST(:keyword AS text), '%'))
+                OR LOWER(advert.description) LIKE LOWER(CONCAT('%', CAST(:keyword AS text), '%'))
             )
             AND (
                 :categoryId IS NULL
