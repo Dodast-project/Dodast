@@ -124,11 +124,24 @@
                                   styleClass="info-row">
 
                                 <Button fx:id="favoriteButton"
-                                   text="افزودن به علاقه‌مندی‌ها"
-                                   onAction="#toggleFavorite"
-                                   styleClass="favorite-button"/>
+                                        text="افزودن به علاقه‌مندی‌ها"
+                                        onAction="#toggleFavorite"
+                                        styleClass="favorite-button"/>
 
                                 <Label text="♡"
+                                       styleClass="favorite-icon"/>
+                            </HBox>
+
+                            <HBox spacing="8"
+                                  alignment="CENTER_RIGHT"
+                                  styleClass="info-row">
+
+                                <Button fx:id="messageSellerButton"
+                                        text="پیام به فروشنده"
+                                        onAction="#openMessageSellerDialog"
+                                        styleClass="favorite-button"/>
+
+                                <Label text="✉"
                                        styleClass="favorite-icon"/>
                             </HBox>
 
@@ -159,7 +172,7 @@
                                        maxWidth="360"
                                        styleClass="description-text"/>
                                 <Label fx:id="statusLabel"/>
-                                
+
                             </VBox>
                         </VBox>
                     </HBox>
