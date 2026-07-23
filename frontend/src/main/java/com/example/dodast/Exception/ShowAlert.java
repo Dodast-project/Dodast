@@ -7,7 +7,7 @@ public class ShowAlert {
     public static void showError(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.getDialogPane().setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        alert.getDialogPane().setStyle("-fx-font-family: 'Vazirmatn';");
+        alert.getDialogPane().setStyle("-fx-font-family: 'Arial';");
         alert.setTitle("خطا");
         alert.setHeaderText(null);
         alert.setContentText(message);
