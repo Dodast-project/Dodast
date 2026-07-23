@@ -47,7 +47,7 @@ public class SearchService {
         if(request.getSortBy()!=null)
             url.append("sortBy=").append(request.getSortBy());
 
-        HttpResponse<String> response = apiClient.getWithQuery(url.toString());
+        HttpResponse<String> response = apiClient.get(url.toString());
 
         if(response.statusCode() >= 200 && response.statusCode() < 300){
             return mapper.readValue(response.body(), new TypeReference<List<AdvertisementResponse>>() {});
