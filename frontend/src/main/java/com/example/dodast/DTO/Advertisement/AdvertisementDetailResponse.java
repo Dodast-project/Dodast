@@ -8,9 +8,9 @@ public class AdvertisementDetailResponse {
     private String title;
     private String description;
     private Long price;
-    private String city;
-    private String province;
-    private String category;
+    private Long cityId;
+    private Long provinceId;
+    private Long categoryId;
     private List<ImageResponse> images;
     private boolean favorite;
 
@@ -49,28 +49,28 @@ public class AdvertisementDetailResponse {
         this.price = price;
     }
 
-    public String getCity() {
-        return city;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
-    public String getProvince() {
-        return province;
+    public Long getProvinceId() {
+        return provinceId;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public List<ImageResponse> getImages() {
