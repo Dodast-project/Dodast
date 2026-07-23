@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
 import com.example.dodast.DTO.Advertisement.ImageResponse;
+import com.example.dodast.DTO.Advertisement.OptionResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Model.*;
@@ -303,5 +304,64 @@ public class AdvertisementService {
         return responses;
      }
 
+     public List<OptionResponse> getCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        List<OptionResponse> responses = new ArrayList<>();
+
+        for (Category category : categories) {
+            OptionResponse response = new OptionResponse(category.getId(), category.getName());
+            responses.add(response);
+        }
+
+        return responses;
+     }
+
+     public List<OptionResponse> getProvinces() {
+        List<Province> provinces = provinceRepository.findAll();
+        List<OptionResponse> responses = new ArrayList<>();
+
+        for (Province province : provinces) {
+            OptionResponse response = new OptionResponse(province.getId(), province.getName());
+            responses.add(response);
+        }
+
+        return responses;
+     }
+
+     public List<OptionResponse> getCities(Long provinceId) {
+        Province province = provinceRepository.findById(provinceId)
+                .orElseThrow(ProvinceNotFoundException::new);
+
+        List<City> cities = cityRepository.findByProvince(province);
+        List<OptionResponse> responses = new ArrayList<>();
+
+        for (City city : cities) {
+            OptionResponse response = new OptionResponse(city.getId(), city.getName());
+            responses.add(response);
+        }
+
+        return responses;
+     }
+
+        public OptionResponse getCategoryById(Long categoryId) {
+           Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(CategoryNotFoundException::new);
+        
+           return new OptionResponse(category.getId(), category.getName());
+        }
+
+        public OptionResponse getProvinceById(Long provinceId) {
+           Province province = provinceRepository.findById(provinceId)
+                .orElseThrow(ProvinceNotFoundException::new);
+        
+           return new OptionResponse(province.getId(), province.getName());
+        }
+
+        public OptionResponse getCityById(Long cityId) {
+           City city = cityRepository.findById(cityId)
+                .orElseThrow(CityNotFoundException::new);
+        
+           return new OptionResponse(city.getId(), city.getName());
+        }
 }
 
