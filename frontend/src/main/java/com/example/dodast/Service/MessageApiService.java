@@ -3,6 +3,7 @@ package com.example.dodast.Service;
 import com.example.dodast.DTO.Message.ConversationResponse;
 import com.example.dodast.DTO.Message.MessageResponse;
 import com.example.dodast.DTO.Message.SendMessageRequest;
+import com.example.dodast.Exception.ExceptionCreator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -31,7 +32,7 @@ public class MessageApiService {
                     mapper.getTypeFactory().constructCollectionType(List.class, ConversationResponse.class)
             );
         }
-        throw createApiException(response);
+        throw ExceptionCreator.createException(response);
     }
 
     public List<MessageResponse> getMessages(Long conversationId) throws Exception {
@@ -43,7 +44,7 @@ public class MessageApiService {
                     mapper.getTypeFactory().constructCollectionType(List.class, MessageResponse.class)
             );
         }
-        throw createApiException(response);
+        throw ExceptionCreator.createException(response);
     }
 
     public MessageResponse sendMessage(Long advertisementId, String text) throws Exception {
@@ -57,7 +58,7 @@ public class MessageApiService {
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             return mapper.readValue(response.body(), MessageResponse.class);
         }
-        throw createApiException(response);
+        throw ExceptionCreator.createException(response);
     }
 
     private RuntimeException createApiException(HttpResponse<String> response) {
