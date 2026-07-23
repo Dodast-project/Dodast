@@ -132,6 +132,19 @@
                                        styleClass="favorite-icon"/>
                             </HBox>
 
+                            <HBox spacing="8"
+                                  alignment="CENTER_RIGHT"
+                                  styleClass="info-row">
+
+                                <Button fx:id="rateButton"
+                                        text="امتیاز به فروشنده"
+                                        onAction="#openRatingDialog"
+                                        styleClass="favorite-button"/>
+
+                                <Label text="⭐"
+                                       styleClass="favorite-icon"/>
+                            </HBox>
+
                             <Region prefHeight="5"/>
 
                             <VBox spacing="10"
