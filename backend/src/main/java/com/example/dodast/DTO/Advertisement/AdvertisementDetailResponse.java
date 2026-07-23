@@ -43,6 +43,7 @@ public class AdvertisementDetailResponse {
         this.province = province;
         this.category = category;
         this.images = images;
+        this.isFavorite = isFavorite;
     }
 
 

@@ -18,6 +18,7 @@ import com.example.dodast.Model.Enums.AdvertisementStatus;
 import com.example.dodast.Exception.ProvinceNotFoundException;
 import com.example.dodast.Exception.CityNotFoundException;
 import com.example.dodast.Exception.CityProvinceNotMatchException;
+import com.example.dodast.Exception.NotPendingAdvertisementException;
 import com.example.dodast.Exception.CategoryNotFoundException;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
 import com.example.dodast.Exception.AdvertisementNotFoundException;
@@ -116,16 +117,17 @@ public class AdvertisementService {
         advertisement.setCategory(category);
         advertisement.setCity(city);
         advertisement.setProvince(province);
+        advertisement.setStatus(AdvertisementStatus.PENDING);
 
-        advertisementRepository.save(advertisement);
+        Advertisement savedAdvertisement = advertisementRepository.save(advertisement);
 
         return new AdvertisementResponse(
-                advertisement.getId(),
-                advertisement.getTitle(),
-                advertisement.getPrice(),
-                advertisement.getCity().getName(),
-                advertisement.getStatus(),
-                getFirstImage(advertisement),
+                savedAdvertisement.getId(),
+                savedAdvertisement.getTitle(),
+                savedAdvertisement.getPrice(),
+                savedAdvertisement.getCity().getName(),
+                savedAdvertisement.getStatus(),
+                getFirstImage(savedAdvertisement),
                 isFavorite(id)
         );
     }
@@ -147,6 +149,7 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementRepository.findById(id)
                 .orElseThrow(AdvertisementNotFoundException::new);
 
+        if(!advertisement.getStatus().equals(AdvertisementStatus.PENDING)) throw  new NotPendingAdvertisementException();
         advertisement.setStatus(AdvertisementStatus.ACTIVE);
 
         advertisementRepository.save(advertisement);
@@ -156,6 +159,8 @@ public class AdvertisementService {
 
         Advertisement advertisement = advertisementRepository.findById(id)
                 .orElseThrow(AdvertisementNotFoundException::new);
+
+        if(!advertisement.getStatus().equals(AdvertisementStatus.PENDING)) throw  new NotPendingAdvertisementException();
 
         advertisement.setStatus(AdvertisementStatus.REJECTED);
 
@@ -271,6 +276,32 @@ public class AdvertisementService {
 
         return favoriteRepository.existsByUserIdAndAdvertisementId(user.getId(), advertisementId);
         }
+
+     public List<AdvertisementResponse> getMyAdvertisements() {
+
+        User currentUser = AdAuthenticator.getCurrentUser();
+
+        List<Advertisement> advertisements = advertisementRepository.findByOwnerAndStatusNot(currentUser, AdvertisementStatus.DELETED);
+
+        List<AdvertisementResponse> responses = new ArrayList<>();
+
+        for (Advertisement advertisement : advertisements) {
+
+                AdvertisementResponse adResponse = new AdvertisementResponse(
+                        advertisement.getId(), 
+                        advertisement.getTitle(), 
+                        advertisement.getPrice(), 
+                        advertisement.getCity().getName(), 
+                        advertisement.getStatus(),
+                        getFirstImage(advertisement),
+                        isFavorite(advertisement.getId())
+                );
+
+                responses.add(adResponse);
+        }
+
+        return responses;
+     }
 
 }
 

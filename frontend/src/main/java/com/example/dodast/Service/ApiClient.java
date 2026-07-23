@@ -34,12 +34,21 @@ public class ApiClient {
         return send(request);
     }
 
+    public HttpResponse<String> delete(String path) throws Exception {
+
+        HttpRequest request = baseRequest(path)
+                .DELETE()
+                .build();
+
+        return send(request);
+    }
+
     public HttpResponse<String> postAdvertisement(String title,
             String description,
-            String price,
-            String categoryId,
-            String provinceId,
-            String cityId,
+            Long price,
+            Long categoryId,
+            Long provinceId,
+            Long cityId,
             File image) throws Exception {
 
         String boundary = UUID.randomUUID().toString();
@@ -48,10 +57,10 @@ public class ApiClient {
 
         addTextPart(parts, boundary, "title", title);
         addTextPart(parts, boundary, "description", description);
-        addTextPart(parts, boundary, "price", price);
-        addTextPart(parts, boundary, "categoryId", categoryId);
-        addTextPart(parts, boundary, "provinceId", provinceId);
-        addTextPart(parts, boundary, "cityId", cityId);
+        addTextPart(parts, boundary, "price", String.valueOf(price));
+        addTextPart(parts, boundary, "categoryId", String.valueOf(categoryId));
+        addTextPart(parts, boundary, "provinceId", String.valueOf(provinceId));
+        addTextPart(parts, boundary, "cityId", String.valueOf(cityId));
 
         if (image != null) {
             addFilePart(parts, boundary, image);
@@ -62,6 +71,25 @@ public class ApiClient {
         HttpRequest request = baseRequest("/advertisements")
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                 .POST(HttpRequest.BodyPublishers.concat(parts.toArray(new HttpRequest.BodyPublisher[0])))
+                .build();
+
+        return send(request);
+    }
+
+    public HttpResponse<String> put(String path, String jsonBody) throws Exception {
+
+        HttpRequest request = baseRequest(path)
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        return send(request);
+    }
+
+    public HttpResponse<String> patch(String path)throws Exception {
+
+        HttpRequest request = baseRequest(path)
+                .method("PATCH", HttpRequest.BodyPublishers.noBody())
                 .build();
 
         return send(request);
@@ -88,13 +116,12 @@ public class ApiClient {
             String name,
             String value) {
 
-        String part =
-                "--" + boundary + "\r\n"
-                + "Content-Disposition: form-data; name=\""
-                + name
-                + "\"\r\n\r\n"
-                + value
-                + "\r\n";
+        String part = "--" + boundary + "\r\n"
+                    + "Content-Disposition: form-data; name=\""
+                    + name
+                    + "\"\r\n\r\n"
+                    + value
+                    + "\r\n";
 
         parts.add(HttpRequest.BodyPublishers.ofString(part));
     }
@@ -109,12 +136,11 @@ public class ApiClient {
             contentType = "application/octet-stream";
         }
 
-        String fileHeader =
-                "--" + boundary + "\r\n"
-                + "Content-Disposition: form-data; "
-                + "name=\"images\"; "
-                + "filename=\"" + image.getName() + "\"\r\n"
-                + "Content-Type: " + contentType + "\r\n\r\n";
+        String fileHeader = "--" + boundary + "\r\n"
+                        + "Content-Disposition: form-data; "
+                        + "name=\"images\"; "
+                        + "filename=\"" + image.getName() + "\"\r\n"
+                        + "Content-Type: " + contentType + "\r\n\r\n";
 
         parts.add(HttpRequest.BodyPublishers.ofString(fileHeader));
 

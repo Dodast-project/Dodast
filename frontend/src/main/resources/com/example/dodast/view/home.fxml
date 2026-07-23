@@ -33,7 +33,11 @@
 
             <Button text="پیام‌ها" onAction="#goToMessages"/>
                 
-            <Button text="علاقه‌مندی‌ها"/>
+            <Button text="علاقه‌مندی‌ها"
+                    onAction="#showFavorites"/>
+
+            <Button text="آگهی‌های من"
+                    onAction="#openMyAdvertisements"/>
 
             <Button text="خروج"
                     onAction="#logout"/>
