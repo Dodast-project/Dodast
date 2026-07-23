@@ -12,11 +12,11 @@ public class AdvertisementDetailResponse {
 
     private Long price;
 
-    private String city;
+    private Long cityId;
 
-    private String province;
+    private Long provinceId;
 
-    private String category;
+    private Long categoryId;
 
     private List<ImageResponse> images;
 
@@ -28,9 +28,9 @@ public class AdvertisementDetailResponse {
             String title,
             String description,
             Long price,
-            String city,
-            String province,
-            String category,
+            Long cityId,
+            Long provinceId,
+            Long categoryId,
             List<ImageResponse> images,
             boolean isFavorite
     ) {
@@ -39,9 +39,9 @@ public class AdvertisementDetailResponse {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.city = city;
-        this.province = province;
-        this.category = category;
+        this.cityId = cityId;
+        this.provinceId = provinceId;
+        this.categoryId = categoryId;
         this.images = images;
         this.isFavorite = isFavorite;
     }
@@ -67,16 +67,16 @@ public class AdvertisementDetailResponse {
         return price;
     }
 
-    public String getCity() {
-        return city;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public String getProvince() {
-        return province;
+    public Long getProvinceId() {
+        return provinceId;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
     public boolean isFavorite(){
