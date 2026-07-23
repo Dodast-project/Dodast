@@ -19,12 +19,17 @@ public class AdvertisementCard {
     private Runnable onEdit;
     private Runnable onDelete;
     private Runnable onMarkAsSold;
+    private Runnable onApprove;
+    private Runnable onReject;
 
     private final VBox card;
     private final Label statusLabel;
     private final Button editButton;
     private final Button deleteButton;
     private final Button soldButton;
+    private final Button approveButton;
+    private final Button rejectButton;
+    private final HBox adminButtons;
 
     public AdvertisementCard(AdvertisementResponse advertisement,Runnable onClick) {
         this.advertisement = advertisement;
@@ -35,6 +40,11 @@ public class AdvertisementCard {
         Label cityLabel = new Label("شهر: " + advertisement.getCity());
 
         Label favoriteLabel = new Label(advertisement.isFavorite() ? "❤" : "♡");
+        Label priceLabel = new Label("قیمت: " + advertisement.getPrice() + " تومان");
+
+        approveButton = new Button("تأیید");
+        rejectButton = new Button("رد");
+        adminButtons = new HBox(8, approveButton, rejectButton);
 
         statusLabel = new Label("وضعیت: " + getStatusText(advertisement.getStatus()));
 
@@ -44,7 +54,7 @@ public class AdvertisementCard {
 
         HBox managementButtons = new HBox(8, editButton, deleteButton, soldButton);
 
-        card = new VBox(10, imageView, titleLabel, cityLabel, favoriteLabel, statusLabel, managementButtons);
+        card = new VBox(10, imageView, titleLabel, cityLabel, favoriteLabel, priceLabel, statusLabel, managementButtons, adminButtons);
 
         card.setPadding(new Insets(10));
         card.setPrefWidth(240);
@@ -68,8 +78,20 @@ public class AdvertisementCard {
             onMarkAsSold.run();
         });
 
+
+        approveButton.setOnAction(event -> {
+            event.consume();
+            onApprove.run();
+        });
+
+        rejectButton.setOnAction(event -> {
+            event.consume();
+            onReject.run();
+        });
+
         setShowStatus(false);
         setShowManagementButtons(false);
+        setShowAdminButtons(false);
     }
 
     private ImageView createImageView() {
@@ -113,6 +135,14 @@ public class AdvertisementCard {
         soldButton.setManaged(canMarkAsSold);
     }
 
+    public void setShowAdminButtons(boolean showAdminButtons) {
+        approveButton.setVisible(showAdminButtons);
+        approveButton.setManaged(showAdminButtons);
+
+        rejectButton.setVisible(showAdminButtons);
+        rejectButton.setManaged(showAdminButtons);
+    }
+
     public void setOnEdit(Runnable onEdit) {
         this.onEdit = onEdit;
     }
@@ -123,6 +153,14 @@ public class AdvertisementCard {
 
     public void setOnMarkAsSold(Runnable onMarkAsSold) {
         this.onMarkAsSold = onMarkAsSold;
+    }
+
+    public void setOnApprove(Runnable onApprove) {
+        this.onApprove = onApprove;
+    }
+
+    public void setOnReject(Runnable onReject) {
+        this.onReject = onReject;
     }
 
     private String getStatusText(String status) {
