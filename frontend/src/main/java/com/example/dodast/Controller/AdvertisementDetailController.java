@@ -15,6 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import com.example.dodast.Controller.RatingDialogController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
 
 public class AdvertisementDetailController {
 
@@ -46,6 +51,9 @@ public class AdvertisementDetailController {
     private Button favoriteButton;
 
     private boolean favorite;
+
+    @FXML
+    private Button rateButton;
 
     @FXML
     private void initialize() {
@@ -154,6 +162,35 @@ public class AdvertisementDetailController {
             e.printStackTrace();
         } finally {
             favoriteButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void openRatingDialog() {
+
+        Long advertisementId = AdvertisementSession.getSelectedAdvertisementId();
+
+        if (advertisementId == null) {
+            ShowAlert.showError("شناسه آگهی مشخص نیست");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/dodast/view/rating-dialog.fxml"));
+            Parent root = loader.load();
+
+            RatingDialogController controller = loader.getController();
+            controller.setAdvertisementId(advertisementId);
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setTitle("امتیاز به فروشنده");
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+        } catch (Exception e) {
+            ShowAlert.showError("در باز کردن پنجره امتیازدهی مشکلی پیش آمد");
+            e.printStackTrace();
         }
     }
 
