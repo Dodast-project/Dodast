@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.dodast.Controller.RatingDialogController"
+      alignment="CENTER"
+      spacing="14"
+      prefWidth="380">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label text="امتیاز به فروشنده"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <Label text="امتیاز (۱ تا ۵)"/>
+
+    <ComboBox fx:id="scoreComboBox"
+              prefWidth="340"/>
+
+    <Label text="نظر شما (اختیاری)"/>
+
+    <TextArea fx:id="commentField"
+              promptText="نظر خود را بنویسید..."
+              prefRowCount="4"
+              wrapText="true"
+              prefWidth="340"/>
+
+    <Label fx:id="messageLabel"
+           visible="false"
+           managed="false"
+           wrapText="true"
+           style="-fx-text-fill: red;"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="submitButton"
+                text="ثبت امتیاز"
+                onAction="#submitRating"/>
+
+        <Button text="انصراف"
+                onAction="#cancel"/>
+    </HBox>
+
+</VBox>
