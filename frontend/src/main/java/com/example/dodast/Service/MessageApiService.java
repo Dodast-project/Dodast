@@ -3,8 +3,6 @@ package com.example.dodast.Service;
 import com.example.dodast.DTO.Message.ConversationResponse;
 import com.example.dodast.DTO.Message.MessageResponse;
 import com.example.dodast.DTO.Message.SendMessageRequest;
-import com.example.dodast.Exception.CannotResponseBackendError;
-import com.example.dodast.Exception.UIException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -62,11 +60,11 @@ public class MessageApiService {
         throw createApiException(response);
     }
 
-    private UIException createApiException(HttpResponse<String> response) {
+    private RuntimeException createApiException(HttpResponse<String> response) {
         try {
-            return new UIException(response.body(), response.statusCode());
+            return new RuntimeException(response.body() + response.statusCode());
         } catch (Exception e) {
-            return new CannotResponseBackendError(response.statusCode());
+            return new RuntimeException("خطایی در ارتباط با سرور پیش آمد" + response.statusCode());
         }
     }
 }
