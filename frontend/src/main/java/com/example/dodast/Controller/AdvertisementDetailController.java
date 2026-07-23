@@ -150,7 +150,7 @@ public class AdvertisementDetailController {
             updateFavoriteButton(favorite);
 
         } catch (Exception e) {
-            ShowAlert.showError(e.getMessage() == null ? "خطا در تغییر وضعیت علاقه‌مندی" : e.getMessage());
+            ShowAlert.showError(e.getMessage());
             e.printStackTrace();
         } finally {
             favoriteButton.setDisable(false);
@@ -164,7 +164,7 @@ public class AdvertisementDetailController {
 
     private void showMessage(String message) {
 
-        messageLabel.setText(message == null ? "خطا در دریافت اطلاعات آگهی" : message);
+        messageLabel.setText(message);
         messageLabel.setVisible(true);
         messageLabel.setManaged(true);
     }

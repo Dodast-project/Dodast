@@ -116,13 +116,12 @@ public class ApiClient {
             String name,
             String value) {
 
-        String part =
-                "--" + boundary + "\r\n"
-                + "Content-Disposition: form-data; name=\""
-                + name
-                + "\"\r\n\r\n"
-                + value
-                + "\r\n";
+        String part = "--" + boundary + "\r\n"
+                    + "Content-Disposition: form-data; name=\""
+                    + name
+                    + "\"\r\n\r\n"
+                    + value
+                    + "\r\n";
 
         parts.add(HttpRequest.BodyPublishers.ofString(part));
     }
@@ -137,12 +136,11 @@ public class ApiClient {
             contentType = "application/octet-stream";
         }
 
-        String fileHeader =
-                "--" + boundary + "\r\n"
-                + "Content-Disposition: form-data; "
-                + "name=\"images\"; "
-                + "filename=\"" + image.getName() + "\"\r\n"
-                + "Content-Type: " + contentType + "\r\n\r\n";
+        String fileHeader = "--" + boundary + "\r\n"
+                        + "Content-Disposition: form-data; "
+                        + "name=\"images\"; "
+                        + "filename=\"" + image.getName() + "\"\r\n"
+                        + "Content-Type: " + contentType + "\r\n\r\n";
 
         parts.add(HttpRequest.BodyPublishers.ofString(fileHeader));
 

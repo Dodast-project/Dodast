@@ -52,7 +52,7 @@ public class RegisterController {
             );
 
         if (validationError != null) {
-            showError(validationError);
+            ShowAlert.showError(validationError);
             return;
         }
 
@@ -117,12 +117,6 @@ public class RegisterController {
 
     private Stage currentStage() {
         return (Stage) usernameField.getScene().getWindow();
-    }
-
-    private void showError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setManaged(true);
-        errorLabel.setVisible(true);
     }
 
     private void hideMessage() {
