@@ -120,9 +120,9 @@ public class FavoriteService {
             advertisement.getTitle(), 
             advertisement.getDescription(), 
             advertisement.getPrice(), 
-            advertisement.getCity().getName(), 
-            advertisement.getProvince().getName(), 
-            advertisement.getCategory().getName(), 
+            advertisement.getCity().getId(), 
+            advertisement.getProvince().getId(), 
+            advertisement.getCategory().getId(), 
             images, true);
 
         return  advertisementDetailResponse;

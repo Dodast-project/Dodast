@@ -3,6 +3,7 @@ package com.example.dodast.Controller;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -10,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
+import com.example.dodast.DTO.Advertisement.OptionResponse;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
 import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Model.AdvertisementFormMode;
@@ -34,13 +36,13 @@ public class AdvertisementFormController {
     private TextField priceField;
 
     @FXML
-    private TextField categoryIdField;
+    private ComboBox<OptionResponse> categoryComboBox;
 
     @FXML
-    private TextField provinceIdField;
+    private ComboBox<OptionResponse> provinceComboBox;
 
     @FXML
-    private TextField cityIdField;
+    private ComboBox<OptionResponse> cityComboBox;
 
     @FXML
     private Label messageLabel;
@@ -63,6 +65,8 @@ public class AdvertisementFormController {
     @FXML
     private void initialize() {
 
+        loadOptions();
+
         if (AdvertisementFormSession.getMode() == AdvertisementFormMode.CREATE) {
             imageSection.setManaged(true);
             imageSection.setVisible(true);
@@ -71,8 +75,6 @@ public class AdvertisementFormController {
             imageSection.setManaged(false);
             imageSection.setVisible(false);
             initializeEdit();
-
-            loadAdvertisement();
         }
     }
 
@@ -119,13 +121,47 @@ public class AdvertisementFormController {
         }
     }
 
+    private void loadOptions(){
+        try {
+            categoryComboBox.getItems().addAll(advertisementService.getCategories());
+            provinceComboBox.getItems().addAll(advertisementService.getProvinces());
+            provinceComboBox.setOnAction(e -> {
+                try {
+                    OptionResponse province = provinceComboBox.getValue();
+
+                    cityComboBox.getItems().clear();
+
+                    if(province != null)
+                        cityComboBox.getItems().addAll(advertisementService.getCities(province.getId()));
+
+                }catch(Exception ex){
+                    ShowAlert.showError(ex.getMessage());
+                    ex.printStackTrace();
+                }  
+            });
+        }catch(Exception e){
+
+            ShowAlert.showError(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void addFields(AdvertisementDetailResponse advertisement) {
-        titleField.setText(advertisement.getTitle());
-        descriptionField.setText(advertisement.getDescription());
-        priceField.setText(String.valueOf(advertisement.getPrice()));
-        categoryIdField.setText(advertisement.getCategory());
-        provinceIdField.setText(advertisement.getProvince());
-        cityIdField.setText(advertisement.getCity());
+        try {
+            titleField.setText(advertisement.getTitle());
+            descriptionField.setText(advertisement.getDescription());
+            priceField.setText(String.valueOf(advertisement.getPrice()));
+            if(advertisement.getCategoryId() != null)
+                categoryComboBox.setValue(advertisementService.getCategoryById(advertisement.getCategoryId()));
+            if(advertisement.getProvinceId() != null)
+                provinceComboBox.setValue(advertisementService.getProvinceById(advertisement.getProvinceId()));
+            if(advertisement.getCityId() != null)   
+                cityComboBox.setValue(advertisementService.getCityById(advertisement.getCityId()));
+        }
+        catch (Exception e) {
+            ShowAlert.showError("خطایی در بارگذاری دسته‌بندی یا شهر یا استان آگهی پیش آمد");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -159,12 +195,12 @@ public class AdvertisementFormController {
         submitButton.setDisable(true);
 
         try {
-            advertisementService.createAdvertisement(titleField.getText().trim(),
+           advertisementService.createAdvertisement(titleField.getText().trim(),
                     descriptionField.getText().trim(),
                     Long.parseLong(priceField.getText().trim()),
-                    Long.parseLong(categoryIdField.getText().trim()),
-                    Long.parseLong(provinceIdField.getText().trim()),
-                    Long.parseLong(cityIdField.getText().trim()), 
+                    categoryComboBox.getValue().getId(),
+                    provinceComboBox.getValue().getId(),
+                    cityComboBox.getValue().getId(),
                     selectedImage
                 );
 
@@ -192,9 +228,9 @@ public class AdvertisementFormController {
             UpdateAdvertisementRequest request = new UpdateAdvertisementRequest(titleField.getText().trim(),
                     descriptionField.getText().trim(),
                     Long.parseLong(priceField.getText().trim()),
-                    Long.parseLong(categoryIdField.getText().trim()),
-                    Long.parseLong(provinceIdField.getText().trim()),
-                    Long.parseLong(cityIdField.getText().trim())
+                    categoryComboBox.getValue().getId(),
+                    provinceComboBox.getValue().getId(),
+                    cityComboBox.getValue().getId()
                 );
 
             advertisementService.updateAdvertisement(advertisementId, request);
@@ -233,9 +269,9 @@ public class AdvertisementFormController {
         titleField.clear();
         descriptionField.clear();
         priceField.clear();
-        categoryIdField.clear();
-        provinceIdField.clear();
-        cityIdField.clear();
+        categoryComboBox.getSelectionModel().clearSelection();
+        provinceComboBox.getSelectionModel().clearSelection();
+        cityComboBox.getSelectionModel().clearSelection();
 
         selectedImage = null;
 
@@ -247,9 +283,9 @@ public class AdvertisementFormController {
         titleField.setDisable(true);
         descriptionField.setDisable(true);
         priceField.setDisable(true);
-        categoryIdField.setDisable(true);
-        provinceIdField.setDisable(true);
-        cityIdField.setDisable(true);
+        categoryComboBox.setDisable(true);
+        provinceComboBox.setDisable(true);
+        cityComboBox.setDisable(true);
         submitButton.setDisable(true);
     }
 
