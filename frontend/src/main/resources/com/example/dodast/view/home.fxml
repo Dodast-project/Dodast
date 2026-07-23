@@ -54,12 +54,61 @@
                         left="35"/>
             </padding>
 
-            <HBox spacing="10">
-                <TextField fx:id="searchField"
-                           promptText="جست‌وجوی آگهی..."
-                           HBox.hgrow="ALWAYS"/>
 
-                <Button text="جست‌وجو"/>
+            <HBox spacing="10"
+                alignment="CENTER"
+                style="-fx-padding:15;">
+
+                <TextField fx:id="keywordField"
+                        promptText="جستجو..." 
+                        prefWidth="200"/>
+
+
+                <HBox spacing="5">
+
+                    <ComboBox fx:id="categoryComboBox"
+                            promptText="دسته‌بندی"
+                            prefWidth="150"/>
+
+                    <Button text="×"
+                            onAction="#clearCategory"/>
+
+                </HBox>
+
+
+                <HBox spacing="5">
+
+                    <ComboBox fx:id="provinceComboBox"
+                            promptText="استان"
+                            prefWidth="150"/>
+
+                    <Button text="×"
+                            onAction="#clearProvince"/>
+
+                </HBox>
+
+
+                <HBox spacing="5">
+
+                    <ComboBox fx:id="cityComboBox"
+                            promptText="شهر"
+                            prefWidth="150"/>
+
+                    <Button text="×"
+                            onAction="#clearCity"/>
+
+                </HBox>
+
+
+                <ComboBox fx:id="sortComboBox"
+                        promptText="مرتب سازی"
+                        prefWidth="150"/>
+
+
+                <Button text="جستجو"
+                        prefWidth="90"
+                        onAction="#search"/>
+
             </HBox>
 
             <Label text="جدیدترین آگهی‌ها"
