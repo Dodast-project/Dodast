@@ -82,9 +82,16 @@ public class AdvertisementDetailController {
         } else {
             priceLabel.setText("قیمت ثبت نشده");
         }
-
-        locationLabel.setText(safeText(advertisement.getProvince()) + "، "+ safeText(advertisement.getCity()));
-        categoryLabel.setText("دسته‌بندی: " + safeText(advertisement.getCategory()));
+        try {
+            locationLabel.setText(safeText(advertisementService.getProvinceById(advertisement.getProvinceId()).getName()) + "، "+ safeText(advertisementService.getCityById(advertisement.getCityId()).getName()));
+            categoryLabel.setText("دسته‌بندی: " + safeText(advertisementService.getCategoryById(advertisement.getCategoryId()).getName()));
+        } catch (Exception e) {
+            locationLabel.setText("نامشخص");
+            categoryLabel.setText("نامشخص");
+            ShowAlert.showError("خطایی در بارگذاری دسته‌بندی یا شهر یا استان آگهی پیش آمد");
+            e.printStackTrace();
+        }
+        
         loadFirstImage(advertisement);
     }
 
