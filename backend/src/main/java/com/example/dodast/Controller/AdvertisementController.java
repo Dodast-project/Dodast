@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.dodast.DTO.Advertisement.AdvertisementDetailResponse;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.DTO.Advertisement.CreateAdvertisementRequest;
+import com.example.dodast.DTO.Advertisement.OptionResponse;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.example.dodast.DTO.Advertisement.UpdateAdvertisementRequest;
@@ -88,6 +90,36 @@ public class AdvertisementController {
     public List<AdvertisementResponse> getMyAdvertisements() {
         return advertisementService.getMyAdvertisements();
     }
-    
 
+    @GetMapping("/categories")
+    public List<OptionResponse> getCategories() {
+        return advertisementService.getCategories();
+    }
+
+    @GetMapping("/provinces")
+    public List<OptionResponse> getProvinces() {
+        return advertisementService.getProvinces();
+    }
+    
+    @GetMapping("/cities/{provinceId}")
+    public List<OptionResponse> getCities(@PathVariable Long provinceId) {
+        return advertisementService.getCities(provinceId);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public OptionResponse getMethodName(@PathVariable Long categoryId) {
+        return advertisementService.getCategoryById(categoryId);
+    }
+
+    @GetMapping("/province/{provinceId}")
+    public OptionResponse getProvinceById(@PathVariable Long provinceId) {
+        return advertisementService.getProvinceById(provinceId);
+    }
+
+    @GetMapping("/city/{cityId}")
+    public OptionResponse getCityById(@PathVariable Long cityId) {
+        return advertisementService.getCityById(cityId);
+    }
+    
+    
 }
