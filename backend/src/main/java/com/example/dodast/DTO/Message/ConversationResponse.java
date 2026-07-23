@@ -4,36 +4,36 @@ import java.time.LocalDateTime;
 
 public class ConversationResponse {
 
-    private Long conversationId;
+    private Long id;
 
     private Long advertisementId;
 
     private String advertisementTitle;
 
-    private String otherUserName;
+    private String otherUserFullName;
 
     private String lastMessage;
 
     private LocalDateTime lastMessageAt;
 
     public ConversationResponse(
-            Long conversationId,
+            Long id,
             Long advertisementId,
             String advertisementTitle,
-            String otherUserName,
+            String otherUserFullName,
             String lastMessage,
             LocalDateTime lastMessageAt
     ) {
-        this.conversationId = conversationId;
+        this.id = id;
         this.advertisementId = advertisementId;
         this.advertisementTitle = advertisementTitle;
-        this.otherUserName = otherUserName;
+        this.otherUserFullName = otherUserFullName;
         this.lastMessage = lastMessage;
         this.lastMessageAt = lastMessageAt;
     }
 
-    public Long getConversationId() {
-        return conversationId;
+    public Long getId() {
+        return id;
     }
 
     public Long getAdvertisementId() {
@@ -44,8 +44,8 @@ public class ConversationResponse {
         return advertisementTitle;
     }
 
-    public String getOtherUserName() {
-        return otherUserName;
+    public String getOtherUserFullName() {
+        return otherUserFullName;
     }
 
     public String getLastMessage() {
