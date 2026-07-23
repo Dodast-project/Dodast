@@ -103,8 +103,34 @@ public class AdvertisementService {
         if (!isSuccessful(response)) throw ExceptionCreator.createException(response);
     }
 
+    public void approveAdvertisement(Long advertisementId) throws Exception {
+
+        HttpResponse<String> response = apiClient.patch("/advertisements/" + advertisementId + "/approve");
+
+        if (!isSuccessful(response)) throw ExceptionCreator.createException(response);
+    }
+
+    public void rejectAdvertisement(Long advertisementId) throws Exception {
+
+        HttpResponse<String> response = apiClient.patch("/advertisements/" + advertisementId + "/reject");
+
+        if (!isSuccessful(response)) throw ExceptionCreator.createException(response);
+    }
+
+    public List<AdvertisementResponse> getPendingAdvertisements() throws Exception {
+
+        HttpResponse<String> response = apiClient.get("/advertisements/pending");
+
+        if (isSuccessful(response)) {
+            return mapper.readValue(response.body(), new TypeReference<List<AdvertisementResponse>>() {});
+        }
+
+        throw ExceptionCreator.createException(response);
+    }
+
     private boolean isSuccessful(HttpResponse<String> response) {
         return response.statusCode() >= 200 && response.statusCode() < 300;
     }
+
 
 }
