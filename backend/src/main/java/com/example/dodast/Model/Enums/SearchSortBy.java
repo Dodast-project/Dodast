@@ -1,8 +1,9 @@
 package com.example.dodast.Model.Enums;
 
-
-public enum SearchSortBy{
+public enum SearchSortBy {
     BESTMATCH,
+    NEWEST,
     LOWESTPRICE,
-    HIGHESTPRICE
+    HIGHESTPRICE,
+    HIGHESTRATED
 }

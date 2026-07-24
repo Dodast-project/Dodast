@@ -4,6 +4,7 @@ import com.example.dodast.Model.Enums.AdvertisementStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -48,5 +49,12 @@ public class Advertisement {
     @OneToMany(mappedBy = "advertisement",
             cascade = CascadeType.ALL)
     private List<AdvertisementImage> images;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 
 }

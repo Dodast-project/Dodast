@@ -108,6 +108,18 @@
                 <Button text="جستجو"
                         prefWidth="90"
                         onAction="#search"/>
+                <HBox spacing="5">
+                        
+                        <TextField fx:id="minPriceField"
+                                promptText="از قیمت"
+                                prefWidth="110"/>
+
+                        <Label text="تا"/>
+
+                        <TextField fx:id="maxPriceField"
+                                promptText="تا قیمت"
+                                prefWidth="110"/>
+                 </HBox>
 
             </HBox>
 

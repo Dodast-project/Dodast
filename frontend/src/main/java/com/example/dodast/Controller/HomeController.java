@@ -50,6 +50,12 @@ public class HomeController implements Initializable {
     @FXML
     private ComboBox<SearchSortBy> sortComboBox;
 
+    @FXML
+    private TextField minPriceField;
+
+    @FXML
+    private TextField maxPriceField;
+
     private final AdvertisementService advertisementService = new AdvertisementService();
 
     private final SearchService searchService = new SearchService();
@@ -91,6 +97,10 @@ public class HomeController implements Initializable {
                     keywordField.setText(SearchSession.getLastSearch().getKeyword());
                 if(SearchSession.getLastSearch().getSortBy() != null)
                     sortComboBox.setValue(SearchSession.getLastSearch().getSortBy());
+                if (SearchSession.getLastSearch().getMinPrice() != null)
+                    minPriceField.setText(String.valueOf(SearchSession.getLastSearch().getMinPrice()));
+                if (SearchSession.getLastSearch().getMaxPrice() != null)
+                    maxPriceField.setText(String.valueOf(SearchSession.getLastSearch().getMaxPrice()));
                 if(SearchSession.getLastSearch().getCategoryId() != null)
                     categoryComboBox.setValue(advertisementService.getCategoryById(SearchSession.getLastSearch().getCategoryId()));
                 if(SearchSession.getLastSearch().getProvinceId() != null)
@@ -146,6 +156,12 @@ public class HomeController implements Initializable {
 
             if(sortComboBox.getValue() != null)
                 request.setSortBy(sortComboBox.getValue());
+
+            if (!minPriceField.getText().isBlank())
+                request.setMinPrice(Long.parseLong(minPriceField.getText()));
+
+            if (!maxPriceField.getText().isBlank())
+                request.setMaxPrice(Long.parseLong(maxPriceField.getText()));
 
             SearchSession.setLastSearch(request);
 
