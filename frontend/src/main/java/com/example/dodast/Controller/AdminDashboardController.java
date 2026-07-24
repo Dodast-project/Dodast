@@ -3,17 +3,12 @@ package com.example.dodast.Controller;
 import com.example.dodast.DTO.Admin.AdminDashboardResponse;
 import com.example.dodast.Exception.ShowAlert;
 import com.example.dodast.Service.AdminDashboardService;
-import com.example.dodast.Util.NavigationSession;
 import com.example.dodast.Util.SceneManager;
 import com.example.dodast.Util.SessionManager;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class AdminDashboardController{
 
@@ -56,7 +51,7 @@ public class AdminDashboardController{
         try {
             Stage stage = (Stage) userCountLabel.getScene().getWindow();
             SceneManager.switchScene(stage, "admin-pending-advertisements.fxml");
-            
+
         } catch (Exception e) {
             ShowAlert.showError("در باز کردن آگهی‌های در انتظار مشکلی پیش آمد");
             e.printStackTrace();
