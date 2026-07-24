@@ -61,11 +61,4 @@ public class MessageApiService {
         throw ExceptionCreator.createException(response);
     }
 
-    private RuntimeException createApiException(HttpResponse<String> response) {
-        try {
-            return new RuntimeException(response.body() + response.statusCode());
-        } catch (Exception e) {
-            return new RuntimeException("خطایی در ارتباط با سرور پیش آمد" + response.statusCode());
-        }
-    }
 }

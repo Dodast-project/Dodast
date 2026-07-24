@@ -12,52 +12,62 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.AdminPendingAdvertisementsController"
             prefWidth="1200"
-            prefHeight="700">
+            prefHeight="700"
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <top>
         <HBox spacing="15"
               alignment="CENTER_LEFT"
-              style="-fx-background-color:#2C3E50;">
+              styleClass="dark-navbar">
 
             <padding>
-                <Insets top="15" right="20" bottom="15" left="20"/>
+                <Insets top="15"
+                        right="20"
+                        bottom="15"
+                        left="20"/>
             </padding>
 
-            <Button text="← بازگشت"
-                    onAction="#goBack"/>
+            <Button text="بازگشت"
+                    onAction="#goBack"
+                    styleClass="back-button"/>
 
             <Label text="آگهی‌های در انتظار تأیید"
-                   style="-fx-font-size:22px;
-                          -fx-font-weight:bold;
-                          -fx-text-fill:white;"/>
+                   styleClass="dark-navbar-title"/>
+
         </HBox>
     </top>
 
     <center>
-
         <BorderPane>
 
             <top>
-
                 <Label fx:id="messageLabel"
                        visible="false"
                        managed="false"
-                       style="-fx-font-size:16px;
-                              -fx-text-fill:#d32f2f;
-                              -fx-padding:10;"/>
+                       wrapText="true"
+                       styleClass="error-message">
 
+                    <BorderPane.margin>
+                        <Insets top="15"
+                                right="20"
+                                bottom="5"
+                                left="20"/>
+                    </BorderPane.margin>
+
+                </Label>
             </top>
 
             <center>
-
                 <ScrollPane fitToWidth="true"
                             fitToHeight="true"
                             pannable="true"
-                            hbarPolicy="NEVER">
+                            hbarPolicy="NEVER"
+                            styleClass="detail-scroll">
 
                     <content>
-
                         <FlowPane fx:id="advertisementsPane"
+                                  alignment="TOP_CENTER"
                                   hgap="20"
                                   vgap="20"
                                   prefWrapLength="1050">
@@ -65,20 +75,17 @@
                             <padding>
                                 <Insets top="20"
                                         right="20"
-                                        bottom="20"
+                                        bottom="30"
                                         left="20"/>
                             </padding>
 
                         </FlowPane>
-
                     </content>
 
                 </ScrollPane>
-
             </center>
 
         </BorderPane>
-
     </center>
 
 </BorderPane>

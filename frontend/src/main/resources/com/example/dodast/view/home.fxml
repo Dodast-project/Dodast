@@ -7,7 +7,8 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.HomeController"
-            styleClass="page">
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <top>
         <HBox alignment="CENTER_LEFT"
@@ -26,13 +27,15 @@
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="usernameLabel"/>
+            <Label fx:id="usernameLabel"
+                   styleClass="username-label"/>
 
             <Button text="ثبت آگهی"
                     onAction="#openCreateAdvertisement"/>
 
-            <Button text="پیام‌ها" onAction="#goToMessages"/>
-                
+            <Button text="پیام‌ها"
+                    onAction="#goToMessages"/>
+
             <Button text="علاقه‌مندی‌ها"
                     onAction="#showFavorites"/>
 
@@ -45,7 +48,8 @@
     </top>
 
     <center>
-        <VBox spacing="20">
+
+        <VBox spacing="22">
 
             <padding>
                 <Insets top="25"
@@ -54,74 +58,76 @@
                         left="35"/>
             </padding>
 
+            <VBox spacing="15"
+                  styleClass="search-panel">
 
-            <HBox spacing="10"
-                alignment="CENTER"
-                style="-fx-padding:15;">
+                <padding>
+                    <Insets top="18"
+                            right="18"
+                            bottom="18"
+                            left="18"/>
+                </padding>
 
-                <TextField fx:id="keywordField"
-                        promptText="جستجو..." 
-                        prefWidth="200"/>
+                <HBox spacing="10"
+                      alignment="CENTER">
 
-
-                <HBox spacing="5">
+                    <TextField fx:id="keywordField"
+                               promptText="جستجوی عنوان..."
+                               prefWidth="220"/>
 
                     <ComboBox fx:id="categoryComboBox"
-                            promptText="دسته‌بندی"
-                            prefWidth="150"/>
+                              promptText="دسته‌بندی"
+                              prefWidth="150"/>
 
                     <Button text="×"
+                            styleClass="clear-button"
                             onAction="#clearCategory"/>
 
-                </HBox>
-
-
-                <HBox spacing="5">
-
                     <ComboBox fx:id="provinceComboBox"
-                            promptText="استان"
-                            prefWidth="150"/>
+                              promptText="استان"
+                              prefWidth="150"/>
 
                     <Button text="×"
+                            styleClass="clear-button"
                             onAction="#clearProvince"/>
 
-                </HBox>
-
-
-                <HBox spacing="5">
-
                     <ComboBox fx:id="cityComboBox"
-                            promptText="شهر"
-                            prefWidth="150"/>
+                              promptText="شهر"
+                              prefWidth="150"/>
 
                     <Button text="×"
+                            styleClass="clear-button"
                             onAction="#clearCity"/>
+
+                    <ComboBox fx:id="sortComboBox"
+                              promptText="مرتب‌سازی"
+                              prefWidth="150"/>
 
                 </HBox>
 
+                <HBox spacing="10"
+                      alignment="CENTER_RIGHT">
 
-                <ComboBox fx:id="sortComboBox"
-                        promptText="مرتب سازی"
-                        prefWidth="150"/>
+                    <TextField fx:id="minPriceField"
+                               promptText="حداقل قیمت"
+                               prefWidth="140"/>
 
+                    <Label text="تا"/>
 
-                <Button text="جستجو"
-                        prefWidth="90"
-                        onAction="#search"/>
-                <HBox spacing="5">
-                        
-                        <TextField fx:id="minPriceField"
-                                promptText="از قیمت"
-                                prefWidth="110"/>
+                    <TextField fx:id="maxPriceField"
+                               promptText="حداکثر قیمت"
+                               prefWidth="140"/>
 
-                        <Label text="تا"/>
+                    <Region HBox.hgrow="ALWAYS"/>
 
-                        <TextField fx:id="maxPriceField"
-                                promptText="تا قیمت"
-                                prefWidth="110"/>
-                 </HBox>
+                    <Button text="جستجو"
+                            prefWidth="120"
+                            onAction="#search"
+                            styleClass="submit-button"/>
 
-            </HBox>
+                </HBox>
+
+            </VBox>
 
             <Label text="جدیدترین آگهی‌ها"
                    styleClass="section-title"/>
@@ -132,18 +138,38 @@
 
             <Label fx:id="messageLabel"
                    visible="false"
-                   managed="false"/>
+                   managed="false"
+                   wrapText="true"
+                   styleClass="error-message"/>
 
             <ScrollPane fitToWidth="true"
-                        VBox.vgrow="ALWAYS">
+                        hbarPolicy="NEVER"
+                        VBox.vgrow="ALWAYS"
+                        styleClass="detail-scroll">
 
                 <content>
+
                     <FlowPane fx:id="advertisementsPane"
-                              hgap="15"
-                              vgap="15"
-                              prefWrapLength="780"/>
+                              alignment="TOP_CENTER"
+                              hgap="18"
+                              vgap="18"
+                              prefWrapLength="900">
+
+                        <padding>
+                            <Insets top="10"
+                                    right="10"
+                                    bottom="10"
+                                    left="10"/>
+                        </padding>
+
+                    </FlowPane>
+
                 </content>
+
             </ScrollPane>
+
         </VBox>
+
     </center>
+
 </BorderPane>

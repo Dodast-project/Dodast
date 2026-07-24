@@ -1,6 +1,7 @@
 package com.example.dodast.Util;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ public final class SceneManager {
 
         FXMLLoader loader = new FXMLLoader(resource);
         Parent root = loader.load();
+
+        root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
         Scene scene = new Scene(root, 900, 600);
 

@@ -124,7 +124,9 @@ public class HomeController implements Initializable {
                 try {
                     OptionResponse province = provinceComboBox.getValue();
                     cityComboBox.getItems().clear();
-                    cityComboBox.getItems().addAll(advertisementService.getCities(province.getId()));
+                    if(province != null){
+                        cityComboBox.getItems().addAll(advertisementService.getCities(province.getId()));
+                    }
                 } catch(Exception ex){
                     ShowAlert.showError("در بارگذاری شهرها مشکلی پیش آمد");
                     ex.printStackTrace();

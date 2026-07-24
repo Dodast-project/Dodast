@@ -1,49 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.dodast.Controller.RatingDialogController"
       alignment="CENTER"
-      spacing="14"
-      prefWidth="380">
+      spacing="15"
+      prefWidth="400"
+      nodeOrientation="RIGHT_TO_LEFT"
+      styleClass="rating-dialog">
 
     <padding>
-        <Insets top="25" right="25" bottom="25" left="25"/>
+        <Insets top="30"
+                right="30"
+                bottom="30"
+                left="30"/>
     </padding>
 
     <Label text="امتیاز به فروشنده"
-           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+           styleClass="dialog-title"/>
 
-    <Label text="امتیاز (۱ تا ۵)"/>
+    <Label text="امتیاز خود را از ۱ تا ۵ انتخاب کنید"
+           wrapText="true"
+           styleClass="dialog-subtitle"/>
 
     <ComboBox fx:id="scoreComboBox"
-              prefWidth="340"/>
+              promptText="انتخاب امتیاز"
+              prefWidth="340"
+              maxWidth="Infinity"
+              styleClass="rating-combo"/>
 
-    <Label text="نظر شما (اختیاری)"/>
+    <Label text="نظر شما (اختیاری)"
+           maxWidth="Infinity"
+           styleClass="field-label"/>
 
     <TextArea fx:id="commentField"
               promptText="نظر خود را بنویسید..."
               prefRowCount="4"
               wrapText="true"
-              prefWidth="340"/>
+              prefWidth="340"
+              maxWidth="Infinity"
+              styleClass="rating-comment"/>
 
     <Label fx:id="messageLabel"
            visible="false"
            managed="false"
            wrapText="true"
-           style="-fx-text-fill: red;"/>
+           maxWidth="Infinity"
+           styleClass="error-message"/>
 
-    <HBox spacing="10" alignment="CENTER">
+    <HBox spacing="12"
+          alignment="CENTER">
+
         <Button fx:id="submitButton"
                 text="ثبت امتیاز"
-                onAction="#submitRating"/>
+                onAction="#submitRating"
+                prefWidth="150"
+                styleClass="rating-submit-button"/>
 
         <Button text="انصراف"
-                onAction="#cancel"/>
+                onAction="#cancel"
+                prefWidth="120"
+                styleClass="secondary-button"/>
+
     </HBox>
 
 </VBox>
