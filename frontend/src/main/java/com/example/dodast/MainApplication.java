@@ -13,8 +13,8 @@ public class MainApplication extends Application {
         OnlineFontLoader.load();
         
         stage.setTitle("Dodast");
-        stage.setMinWidth(1400);
-        stage.setMinHeight(850);
+        stage.setMinWidth(800);
+        stage.setMinHeight(550);
 
         SceneManager.switchScene(stage, "login.fxml");
     }
