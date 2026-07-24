@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/advertisements/pending").hasRole("ADMIN")
                         .requestMatchers("/advertisements/*/approve", "/advertisements/*/reject").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/auth/register", "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/advertisements/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/advertisements/**").authenticated()
