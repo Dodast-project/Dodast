@@ -5,6 +5,6 @@ import com.example.dodast.Exception.ApiException;
 
 public class FavoriteAlreadyExistsException extends ApiException{
     public FavoriteAlreadyExistsException(){
-        super("Advertisement is already in favorites", HttpStatus.BAD_REQUEST);
+        super("آگهی قبلا به علاقه مندی ها اضافه شده است.", HttpStatus.BAD_REQUEST);
     }
 }

@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidPriceRangeException extends ApiException{
     public InvalidPriceRangeException(){
-        super("Invalid price range", HttpStatus.BAD_REQUEST);
+        super("محدوده قیمت نامعتبر است.", HttpStatus.BAD_REQUEST);
     }
 }

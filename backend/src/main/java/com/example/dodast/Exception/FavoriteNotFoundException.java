@@ -6,6 +6,6 @@ import com.example.dodast.Exception.ApiException;
 
 public class FavoriteNotFoundException extends ApiException{
     public FavoriteNotFoundException(){
-        super("Favorite not found", HttpStatus.NOT_FOUND);
+        super("علاقه مندی یافت نشد.", HttpStatus.NOT_FOUND);
     }
 }

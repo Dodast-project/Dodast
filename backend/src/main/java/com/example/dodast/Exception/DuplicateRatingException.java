@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class DuplicateRatingException extends ApiException {
     public DuplicateRatingException() {
-        super("You have already rated the seller for this advertisement.", HttpStatus.CONFLICT);
+        super("شما قبلا برای این آگهی به فروشنده امتیاز داده اید.", HttpStatus.CONFLICT);
     }
 }
