@@ -13,7 +13,8 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.AdvertisementDetailController"
-            styleClass="detail-page">
+            styleClass="detail-page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <top>
         <HBox alignment="CENTER_LEFT"
@@ -40,6 +41,7 @@
 
     <center>
         <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
                     styleClass="detail-scroll">
 
             <content>
@@ -67,6 +69,7 @@
 
                         <VBox alignment="TOP_CENTER"
                               spacing="10"
+                              prefWidth="430"
                               styleClass="image-container">
 
                             <ImageView fx:id="advertisementImage"
@@ -87,6 +90,7 @@
                             <Label fx:id="titleLabel"
                                    text="عنوان آگهی"
                                    wrapText="true"
+                                   maxWidth="400"
                                    styleClass="advertisement-title"/>
 
                             <Label fx:id="priceLabel"
@@ -99,63 +103,71 @@
                                   alignment="CENTER_RIGHT"
                                   styleClass="info-row">
 
-                                <Label fx:id="locationLabel"
-                                       text="استان، شهر"
-                                       wrapText="true"/>
-
                                 <Label text="📍"
                                        styleClass="info-icon"/>
+
+                                <Label fx:id="locationLabel"
+                                       text="استان، شهر"
+                                       wrapText="true"
+                                       HBox.hgrow="ALWAYS"/>
                             </HBox>
 
                             <HBox spacing="8"
                                   alignment="CENTER_RIGHT"
                                   styleClass="info-row">
-
-                                <Label fx:id="categoryLabel"
-                                       text="دسته‌بندی"
-                                       wrapText="true"/>
 
                                 <Label text="🏷"
                                        styleClass="info-icon"/>
+
+                                <Label fx:id="categoryLabel"
+                                       text="دسته‌بندی"
+                                       wrapText="true"
+                                       HBox.hgrow="ALWAYS"/>
                             </HBox>
 
                             <HBox spacing="8"
                                   alignment="CENTER_RIGHT"
                                   styleClass="info-row">
+
+                                <Label text="♡"
+                                       styleClass="favorite-icon"/>
 
                                 <Button fx:id="favoriteButton"
                                         text="افزودن به علاقه‌مندی‌ها"
                                         onAction="#toggleFavorite"
+                                        maxWidth="Infinity"
+                                        HBox.hgrow="ALWAYS"
                                         styleClass="favorite-button"/>
-
-                                <Label text="♡"
-                                       styleClass="favorite-icon"/>
                             </HBox>
 
                             <HBox spacing="8"
                                   alignment="CENTER_RIGHT"
                                   styleClass="info-row">
+
+                                <Label text="✉"
+                                       styleClass="action-icon"/>
 
                                 <Button fx:id="messageSellerButton"
                                         text="پیام به فروشنده"
                                         onAction="#openMessageSellerDialog"
+                                        maxWidth="Infinity"
+                                        HBox.hgrow="ALWAYS"
                                         styleClass="favorite-button"/>
-
-                                <Label text="✉"
-                                       styleClass="favorite-icon"/>
                             </HBox>
 
                             <HBox spacing="8"
                                   alignment="CENTER_RIGHT"
                                   styleClass="info-row">
 
+                                <Label text="★"
+                                       styleClass="rating-icon"/>
+
                                 <Button fx:id="rateButton"
                                         text="امتیاز به فروشنده"
                                         onAction="#openRatingDialog"
+                                        maxWidth="Infinity"
+                                        HBox.hgrow="ALWAYS"
                                         styleClass="favorite-button"/>
-
-                                <Label text="⭐"
-                                       styleClass="favorite-icon"/>
                             </HBox>
 
                             <Region prefHeight="5"/>
@@ -171,7 +183,9 @@
                                        wrapText="true"
                                        maxWidth="360"
                                        styleClass="description-text"/>
-                                <Label fx:id="statusLabel"/>
+
+                                <Label fx:id="statusLabel"
+                                       styleClass="status-label"/>
 
                             </VBox>
                         </VBox>
@@ -181,6 +195,7 @@
                            visible="false"
                            managed="false"
                            wrapText="true"
+                           maxWidth="950"
                            styleClass="error-message"/>
                 </VBox>
             </content>

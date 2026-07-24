@@ -7,30 +7,74 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.dodast.Controller.ChatController"
-            prefHeight="600.0" prefWidth="900.0">
+            prefHeight="600.0"
+            prefWidth="900.0"
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
+
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox spacing="12"
+              alignment="CENTER_LEFT"
+              styleClass="navbar">
+
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets top="14"
+                        right="20"
+                        bottom="14"
+                        left="20"/>
             </padding>
-            <Button text="بازگشت" onAction="#backToMessages"/>
-            <Label fx:id="titleLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <Label fx:id="titleLabel"
+                   text="گفت‌وگو"
+                   styleClass="page-title"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="بازگشت"
+                    onAction="#backToMessages"
+                    styleClass="back-button"/>
+
         </HBox>
     </top>
+
     <center>
-        <ListView fx:id="messagesListView"/>
+        <ListView fx:id="messagesListView"
+                  styleClass="chat-list"/>
     </center>
+
     <bottom>
-        <HBox spacing="10" alignment="CENTER">
+        <HBox spacing="10"
+              alignment="CENTER"
+              styleClass="chat-input-bar">
+
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets top="12"
+                        right="16"
+                        bottom="12"
+                        left="16"/>
             </padding>
-            <TextField fx:id="messageField" promptText="متن پیام..." HBox.hgrow="ALWAYS"/>
-            <Button text="ارسال" onAction="#sendMessage"/>
-            <Label fx:id="errorLabel"/>
+
+            <Label fx:id="errorLabel"
+                   visible="false"
+                   managed="false"
+                   wrapText="true"
+                   styleClass="error-message"/>
+
+            <TextField fx:id="messageField"
+                       promptText="متن پیام..."
+                       HBox.hgrow="ALWAYS"
+                       styleClass="chat-message-field"/>
+
+            <Button text="ارسال"
+                    onAction="#sendMessage"
+                    styleClass="send-button"/>
+
         </HBox>
     </bottom>
+
 </BorderPane>

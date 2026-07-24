@@ -6,27 +6,64 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.dodast.Controller.MessagesController"
-            prefHeight="600.0" prefWidth="900.0">
+            prefHeight="600.0"
+            prefWidth="900.0"
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
+
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT"
+              spacing="12"
+              styleClass="navbar">
+
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets top="14"
+                        right="20"
+                        bottom="14"
+                        left="20"/>
             </padding>
-            <Button text="بازگشت" onAction="#backToHome"/>
-            <Label text="گفت‌وگوهای من" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <Label text="گفت‌وگوهای من"
+                   styleClass="page-title"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="بازگشت"
+                    onAction="#backToHome"
+                    styleClass="back-button"/>
+
         </HBox>
     </top>
+
     <center>
-        <ListView fx:id="conversationsListView"/>
+
+        <ListView fx:id="conversationsListView"
+                  styleClass="conversation-list"/>
+
     </center>
+
     <bottom>
-        <Label fx:id="messageLabel">
+
+        <Label fx:id="messageLabel"
+               visible="false"
+               managed="false"
+               wrapText="true"
+               styleClass="error-message">
+
             <BorderPane.margin>
-                <Insets top="5" right="10" bottom="5" left="10"/>
+                <Insets top="8"
+                        right="15"
+                        bottom="10"
+                        left="15"/>
             </BorderPane.margin>
+
         </Label>
+
     </bottom>
+
 </BorderPane>

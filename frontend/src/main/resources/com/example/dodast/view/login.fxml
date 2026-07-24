@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.LoginController"
-            styleClass="page">
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <center>
         <VBox alignment="CENTER"
-              spacing="14"
-              maxWidth="360"
-              styleClass="form-card">
+              spacing="16"
+              maxWidth="390"
+              styleClass="form-card login-card">
 
             <padding>
-                <Insets top="35"
-                        right="35"
-                        bottom="35"
-                        left="35"/>
+                <Insets top="40"
+                        right="40"
+                        bottom="40"
+                        left="40"/>
             </padding>
 
             <Label text="ورود به دودست"
                    styleClass="title"/>
 
             <Label text="نام کاربری یا ایمیل خود را وارد کنید"
-                   styleClass="subtitle"/>
+                   styleClass="subtitle"
+                   wrapText="true"/>
 
             <TextField fx:id="identifierField"
                        promptText="نام کاربری یا ایمیل"
-                       prefWidth="290"/>
+                       prefWidth="300"
+                       maxWidth="Infinity"/>
 
             <PasswordField fx:id="passwordField"
                            promptText="رمز عبور"
-                           prefWidth="290"/>
+                           prefWidth="300"
+                           maxWidth="Infinity"/>
 
             <Label fx:id="errorLabel"
                    visible="false"
                    managed="false"
                    wrapText="true"
+                   maxWidth="Infinity"
                    styleClass="error-label"/>
 
             <Button fx:id="loginButton"
                     text="ورود"
-                    prefWidth="290"
+                    prefWidth="300"
+                    maxWidth="Infinity"
                     defaultButton="true"
-                    onAction="#login"/>
+                    onAction="#login"
+                    styleClass="login-button"/>
 
             <Hyperlink text="حساب ندارید؟ ثبت‌نام کنید"
-                       onAction="#goToRegister"/>
+                       onAction="#goToRegister"
+                       styleClass="register-link"/>
+
         </VBox>
     </center>
+
 </BorderPane>

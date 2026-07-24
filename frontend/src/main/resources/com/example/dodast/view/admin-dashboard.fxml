@@ -7,7 +7,8 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.AdminDashboardController"
-            styleClass="page">
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <top>
         <HBox alignment="CENTER_LEFT"
@@ -49,7 +50,7 @@
             <Label text="آمار سامانه"
                    styleClass="section-title"/>
 
-            <HBox alignment="CENTER"
+            <HBox alignment="TOP_CENTER"
                   spacing="25">
 
                 <VBox alignment="CENTER"
@@ -63,7 +64,7 @@
 
                     <Label fx:id="userCountLabel"
                            text="0"
-                           styleClass="dashboard-card-number"/>
+                           styleClass="dashboard-card users-card"/>
                 </VBox>
 
                 <VBox alignment="CENTER"
@@ -77,7 +78,7 @@
 
                     <Label fx:id="advertisementCountLabel"
                            text="0"
-                           styleClass="dashboard-card-number"/>
+                           styleClass="dashboard-card advertisements-card"/>
                 </VBox>
 
                 <VBox alignment="CENTER"
@@ -91,7 +92,7 @@
 
                     <Label fx:id="pendingCountLabel"
                            text="0"
-                           styleClass="dashboard-card-number"/>
+                           styleClass="dashboard-card pending-card"/>
                 </VBox>
 
             </HBox>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -8,15 +12,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.ComboBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.AdvertisementFormController"
-            styleClass="page">
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <top>
         <HBox alignment="CENTER_LEFT"
@@ -37,24 +38,27 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <Button text="بازگشت"
-                    onAction="#handleBack"/>
+                    onAction="#handleBack"
+                    styleClass="back-button"/>
         </HBox>
     </top>
 
     <center>
         <ScrollPane fitToWidth="true"
-                    hbarPolicy="NEVER">
+                    hbarPolicy="NEVER"
+                    styleClass="detail-scroll">
 
             <content>
                 <VBox alignment="TOP_CENTER"
-                      spacing="15"
-                      maxWidth="520">
+                      spacing="18"
+                      maxWidth="580"
+                      styleClass="advertisement-form-card">
 
                     <padding>
                         <Insets top="30"
-                                right="30"
-                                bottom="30"
-                                left="30"/>
+                                right="35"
+                                bottom="35"
+                                left="35"/>
                     </padding>
 
                     <Label text="اطلاعات آگهی"
@@ -80,20 +84,22 @@
                            styleClass="section-title"/>
 
                     <ComboBox fx:id="categoryComboBox"
-                            promptText="دسته‌بندی"
-                            maxWidth="500"/>
+                              promptText="دسته‌بندی"
+                              maxWidth="500"/>
 
-                     <ComboBox fx:id="provinceComboBox"
-                            promptText="استان"
-                            maxWidth="500"/>
+                    <ComboBox fx:id="provinceComboBox"
+                              promptText="استان"
+                              maxWidth="500"/>
 
-                     <ComboBox fx:id="cityComboBox"
-                            promptText="شهر"
-                            maxWidth="500"/>
+                    <ComboBox fx:id="cityComboBox"
+                              promptText="شهر"
+                              maxWidth="500"/>
 
                     <VBox fx:id="imageSection"
                           alignment="CENTER"
-                          spacing="10">
+                          spacing="12"
+                          maxWidth="500"
+                          styleClass="image-upload-box">
 
                         <Separator/>
 
@@ -101,24 +107,30 @@
                                styleClass="section-title"/>
 
                         <Button text="انتخاب تصویر"
-                                onAction="#chooseImage"/>
+                                onAction="#chooseImage"
+                                styleClass="secondary-button"/>
 
                         <Label fx:id="imageNameLabel"
                                text="تصویری انتخاب نشده"
-                               wrapText="true"/>
+                               wrapText="true"
+                               styleClass="image-name-label"/>
                     </VBox>
 
                     <Label fx:id="messageLabel"
                            visible="false"
                            managed="false"
-                           wrapText="true"/>
+                           wrapText="true"
+                           maxWidth="500"
+                           styleClass="error-message"/>
 
                     <Button fx:id="submitButton"
                             text="ثبت آگهی"
                             onAction="#handleSubmit"
-                            maxWidth="500"/>
+                            maxWidth="500"
+                            styleClass="submit-button"/>
                 </VBox>
             </content>
         </ScrollPane>
     </center>
+
 </BorderPane>

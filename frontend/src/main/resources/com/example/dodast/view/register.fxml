@@ -7,58 +7,76 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dodast.Controller.RegisterController"
-            styleClass="page">
+            styleClass="page"
+            nodeOrientation="RIGHT_TO_LEFT">
 
     <center>
+
         <VBox alignment="CENTER"
-              spacing="12"
-              maxWidth="380"
-              styleClass="form-card">
+              spacing="14"
+              maxWidth="400"
+              styleClass="form-card register-card">
 
             <padding>
-                <Insets top="30"
-                        right="35"
-                        bottom="30"
-                        left="35"/>
+                <Insets top="40"
+                        right="40"
+                        bottom="40"
+                        left="40"/>
             </padding>
 
             <Label text="ساخت حساب کاربری"
                    styleClass="title"/>
 
+            <Label text="اطلاعات خود را برای ایجاد حساب وارد کنید"
+                   styleClass="subtitle"
+                   wrapText="true"/>
+
             <TextField fx:id="fullNameField"
                        promptText="نام و نام خانوادگی"
-                       prefWidth="300"/>
+                       prefWidth="310"
+                       maxWidth="Infinity"/>
 
             <TextField fx:id="usernameField"
                        promptText="نام کاربری"
-                       prefWidth="300"/>
+                       prefWidth="310"
+                       maxWidth="Infinity"/>
 
             <TextField fx:id="emailField"
                        promptText="ایمیل"
-                       prefWidth="300"/>
+                       prefWidth="310"
+                       maxWidth="Infinity"/>
 
             <PasswordField fx:id="passwordField"
                            promptText="رمز عبور"
-                           prefWidth="300"/>
+                           prefWidth="310"
+                           maxWidth="Infinity"/>
 
             <PasswordField fx:id="confirmPasswordField"
                            promptText="تکرار رمز عبور"
-                           prefWidth="300"/>
+                           prefWidth="310"
+                           maxWidth="Infinity"/>
 
             <Label fx:id="errorLabel"
                    visible="false"
                    managed="false"
                    wrapText="true"
+                   maxWidth="Infinity"
                    styleClass="error-label"/>
 
             <Button fx:id="registerButton"
                     text="ثبت‌نام"
-                    prefWidth="300"
+                    prefWidth="310"
+                    maxWidth="Infinity"
                     defaultButton="true"
-                    onAction="#register"/>
+                    onAction="#register"
+                    styleClass="register-button"/>
 
             <Hyperlink text="قبلاً ثبت‌نام کرده‌اید؟ ورود"
-                       onAction="#goToLogin"/>
+                       onAction="#goToLogin"
+                       styleClass="login-link"/>
+
         </VBox>
+
     </center>
+
 </BorderPane>
