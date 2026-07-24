@@ -79,7 +79,7 @@ public class ChatController {
         }
 
         try {
-            messageApiService.sendMessage(advertisementId, text);
+            messageApiService.replyInConversation(conversationId, text);
             messageField.clear();
             loadMessages();
         } catch (Exception e) {
