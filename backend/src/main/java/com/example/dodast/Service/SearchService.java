@@ -6,7 +6,7 @@ import com.example.dodast.DTO.Advertisement.AdSearchRequest;
 import com.example.dodast.DTO.Advertisement.AdvertisementResponse;
 import com.example.dodast.Exception.InvalidPriceRangeException;
 import com.example.dodast.Model.Enums.AdvertisementStatus;
-
+import com.example.dodast.Model.Enums.SearchSortBy;
 import com.example.dodast.Repository.AdvertisementRepository;
 import com.example.dodast.Repository.FavoriteRepository;
 
@@ -48,6 +48,14 @@ public class SearchService {
             sort
         );
 
+        if (request.getSortBy() == SearchSortBy.HIGHESTRATED) {
+            ads = searchRankingSystem.sortBySellerRating(ads);
+        }
+
+        if (request.getSortBy() == SearchSortBy.BESTMATCH && keyword != null && !keyword.isBlank()) {
+            ads = searchRankingSystem.sortByBestMatch(ads, keyword);
+        }
+       
         List<AdvertisementResponse> adResponses = new ArrayList<>();
 
         
