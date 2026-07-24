@@ -32,7 +32,7 @@ public class GlobalExceptionHandling{
             errors.put(fieldName, errorMessage);
         }
 
-        ValidationErrorResponse response = new ValidationErrorResponse("Validation error", HttpStatus.BAD_REQUEST.value(), errors);
+        ValidationErrorResponse response = new ValidationErrorResponse("خطای اعتبارسنجی", HttpStatus.BAD_REQUEST.value(), errors);
 
         return ResponseEntity.badRequest().body(response);
     }
