@@ -35,10 +35,48 @@ public class MessageService {
     public MessageResponse sendMessage(SendMessageRequest request) {
 
         User currentUser = AdAuthenticator.getCurrentUser();
+        Conversation conversation;
 
-        Conversation conversation = request.getConversationId() != null
-                ? getExistingConversation(request.getConversationId(), currentUser)
-                : getOrCreateConversation(request.getAdvertisementId(), currentUser);
+        if (request.getConversationId() != null) {
+
+            conversation = conversationRepository.findById(request.getConversationId())
+                    .orElseThrow(ConversationNotFoundException::new);
+
+            checkParticipant(conversation, currentUser);
+
+            User otherUser = conversation.getBuyer().getId().equals(currentUser.getId())
+                    ? conversation.getSeller()
+                    : conversation.getBuyer();
+
+            if (currentUser.isBlocked() || otherUser.isBlocked()) {
+                throw new UserBlockedException();
+            }
+
+        } else {
+
+            Advertisement advertisement = advertisementRepository.findById(request.getAdvertisementId())
+                    .orElseThrow(AdvertisementNotFoundException::new);
+
+            User seller = advertisement.getOwner();
+
+            if (currentUser.getId().equals(seller.getId())) {
+                throw new SelfMessageException();
+            }
+
+            if (currentUser.isBlocked() || seller.isBlocked()) {
+                throw new UserBlockedException();
+            }
+
+            conversation = conversationRepository
+                    .findByBuyerAndSellerAndAdvertisement(currentUser, seller, advertisement)
+                    .orElseGet(() -> conversationRepository.save(
+                            Conversation.builder()
+                                    .buyer(currentUser)
+                                    .seller(seller)
+                                    .advertisement(advertisement)
+                                    .build()
+                    ));
+        }
 
         Message message = Message.builder()
                 .conversation(conversation)

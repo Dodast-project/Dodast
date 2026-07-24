@@ -51,7 +51,17 @@ public class MessageApiService {
         SendMessageRequest request = new SendMessageRequest();
         request.setAdvertisementId(advertisementId);
         request.setText(text);
+        return doSend(request);
+    }
 
+    public MessageResponse replyInConversation(Long conversationId, String text) throws Exception {
+        SendMessageRequest request = new SendMessageRequest();
+        request.setConversationId(conversationId);
+        request.setText(text);
+        return doSend(request);
+    }
+
+    private MessageResponse doSend(SendMessageRequest request) throws Exception {
         String json = mapper.writeValueAsString(request);
         HttpResponse<String> response = apiClient.post("/messages", json);
 
@@ -59,13 +69,5 @@ public class MessageApiService {
             return mapper.readValue(response.body(), MessageResponse.class);
         }
         throw ExceptionCreator.createException(response);
-    }
-
-    private RuntimeException createApiException(HttpResponse<String> response) {
-        try {
-            return new RuntimeException(response.body() + response.statusCode());
-        } catch (Exception e) {
-            return new RuntimeException("خطایی در ارتباط با سرور پیش آمد" + response.statusCode());
-        }
     }
 }
