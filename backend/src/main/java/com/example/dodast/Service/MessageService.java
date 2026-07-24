@@ -34,29 +34,49 @@ public class MessageService {
     @Transactional
     public MessageResponse sendMessage(SendMessageRequest request) {
 
-        Advertisement advertisement = advertisementRepository.findById(request.getAdvertisementId())
-                .orElseThrow(AdvertisementNotFoundException::new);
-
         User currentUser = AdAuthenticator.getCurrentUser();
-        User seller = advertisement.getOwner();
+        Conversation conversation;
 
-        if (currentUser.getId().equals(seller.getId())) {
-            throw new SelfMessageException();
+        if (request.getConversationId() != null) {
+
+            conversation = conversationRepository.findById(request.getConversationId())
+                    .orElseThrow(ConversationNotFoundException::new);
+
+            checkParticipant(conversation, currentUser);
+
+            User otherUser = conversation.getBuyer().getId().equals(currentUser.getId())
+                    ? conversation.getSeller()
+                    : conversation.getBuyer();
+
+            if (currentUser.isBlocked() || otherUser.isBlocked()) {
+                throw new UserBlockedException();
+            }
+
+        } else {
+
+            Advertisement advertisement = advertisementRepository.findById(request.getAdvertisementId())
+                    .orElseThrow(AdvertisementNotFoundException::new);
+
+            User seller = advertisement.getOwner();
+
+            if (currentUser.getId().equals(seller.getId())) {
+                throw new SelfMessageException();
+            }
+
+            if (currentUser.isBlocked() || seller.isBlocked()) {
+                throw new UserBlockedException();
+            }
+
+            conversation = conversationRepository
+                    .findByBuyerAndSellerAndAdvertisement(currentUser, seller, advertisement)
+                    .orElseGet(() -> conversationRepository.save(
+                            Conversation.builder()
+                                    .buyer(currentUser)
+                                    .seller(seller)
+                                    .advertisement(advertisement)
+                                    .build()
+                    ));
         }
-
-        if (currentUser.isBlocked() || seller.isBlocked()) {
-            throw new UserBlockedException();
-        }
-
-        Conversation conversation = conversationRepository
-                .findByBuyerAndSellerAndAdvertisement(currentUser, seller, advertisement)
-                .orElseGet(() -> conversationRepository.save(
-                        Conversation.builder()
-                                .buyer(currentUser)
-                                .seller(seller)
-                                .advertisement(advertisement)
-                                .build()
-                ));
 
         Message message = Message.builder()
                 .conversation(conversation)
@@ -76,6 +96,53 @@ public class MessageService {
                 message.getText(),
                 message.getSentAt()
         );
+    }
+
+    private Conversation getExistingConversation(Long conversationId, User currentUser) {
+
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(ConversationNotFoundException::new);
+
+        checkParticipant(conversation, currentUser);
+
+        User buyer = conversation.getBuyer();
+        User seller = conversation.getSeller();
+
+        if (buyer.isBlocked() || seller.isBlocked()) {
+            throw new UserBlockedException();
+        }
+
+        return conversation;
+    }
+
+    private Conversation getOrCreateConversation(Long advertisementId, User currentUser) {
+
+        if (advertisementId == null) {
+            throw new AdvertisementNotFoundException();
+        }
+
+        Advertisement advertisement = advertisementRepository.findById(advertisementId)
+                .orElseThrow(AdvertisementNotFoundException::new);
+
+        User seller = advertisement.getOwner();
+
+        if (currentUser.getId().equals(seller.getId())) {
+            throw new SelfMessageException();
+        }
+
+        if (currentUser.isBlocked() || seller.isBlocked()) {
+            throw new UserBlockedException();
+        }
+
+        return conversationRepository
+                .findByBuyerAndSellerAndAdvertisement(currentUser, seller, advertisement)
+                .orElseGet(() -> conversationRepository.save(
+                        Conversation.builder()
+                                .buyer(currentUser)
+                                .seller(seller)
+                                .advertisement(advertisement)
+                                .build()
+                ));
     }
 
     @Transactional(readOnly = true)

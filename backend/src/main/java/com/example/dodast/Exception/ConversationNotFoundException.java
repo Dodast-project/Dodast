@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class ConversationNotFoundException extends ApiException {
     public ConversationNotFoundException() {
-        super("Conversation not found.", HttpStatus.NOT_FOUND);
+        super("گفت و گو یافت نشد.", HttpStatus.NOT_FOUND);
     }
 }

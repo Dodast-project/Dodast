@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidRatingValueException extends ApiException {
   public InvalidRatingValueException() {
-    super("Rating must be between 1 and 5.", HttpStatus.BAD_REQUEST);
+    super("امتیاز باید بین 1 تا 5 باشد.", HttpStatus.BAD_REQUEST);
   }
 }

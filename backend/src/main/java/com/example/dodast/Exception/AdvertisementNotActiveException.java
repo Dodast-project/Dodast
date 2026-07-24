@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public class AdvertisementNotActiveException extends ApiException {
 
     public AdvertisementNotActiveException() {
-        super("Advertisement is not active.", HttpStatus.NOT_FOUND);
+        super("آگهی فعال نیست.", HttpStatus.NOT_FOUND);
     }
 
 }

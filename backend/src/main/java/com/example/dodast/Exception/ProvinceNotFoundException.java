@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public class ProvinceNotFoundException extends ApiException {
 
     public ProvinceNotFoundException() {
-        super("Province not found.", HttpStatus.NOT_FOUND);
+        super("استان مورد نظر یافت نشد.", HttpStatus.NOT_FOUND);
     }
 
 }

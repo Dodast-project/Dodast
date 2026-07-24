@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class SelfRatingException extends ApiException {
     public SelfRatingException() {
-        super("You cannot rate yourself.", HttpStatus.BAD_REQUEST);
+        super("شما نمیتوانید به خودتان امتیاز دهید.", HttpStatus.BAD_REQUEST);
     }
 }

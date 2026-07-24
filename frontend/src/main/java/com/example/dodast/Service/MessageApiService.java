@@ -51,7 +51,17 @@ public class MessageApiService {
         SendMessageRequest request = new SendMessageRequest();
         request.setAdvertisementId(advertisementId);
         request.setText(text);
+        return doSend(request);
+    }
 
+    public MessageResponse replyInConversation(Long conversationId, String text) throws Exception {
+        SendMessageRequest request = new SendMessageRequest();
+        request.setConversationId(conversationId);
+        request.setText(text);
+        return doSend(request);
+    }
+
+    private MessageResponse doSend(SendMessageRequest request) throws Exception {
         String json = mapper.writeValueAsString(request);
         HttpResponse<String> response = apiClient.post("/messages", json);
 

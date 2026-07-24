@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class CityProvinceNotMatchException extends ApiException{
     public CityProvinceNotMatchException(){
-        super("City is not in the selected province", HttpStatus.BAD_REQUEST);
+        super("شهر مورد نظر در استان انتخاب شده قرار ندارد.", HttpStatus.BAD_REQUEST);
     }
 }

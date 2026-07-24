@@ -1,12 +1,12 @@
 package com.example.dodast.DTO.Message;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class SendMessageRequest {
 
-    @NotNull
     private Long advertisementId;
+
+    private Long conversationId;
 
     @NotBlank
     private String text;
@@ -17,6 +17,14 @@ public class SendMessageRequest {
 
     public void setAdvertisementId(Long advertisementId) {
         this.advertisementId = advertisementId;
+    }
+
+    public Long getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(Long conversationId) {
+        this.conversationId = conversationId;
     }
 
     public String getText() {

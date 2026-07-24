@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidJwtException extends ApiException{
     public InvalidJwtException(){
-        super("Invalid or expired jwt token", HttpStatus.UNAUTHORIZED);
+        super("توکن JWT نامعتبر یا منقضی شده است.", HttpStatus.UNAUTHORIZED);
     }
 }
