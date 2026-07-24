@@ -64,7 +64,7 @@ public class ChatController {
                 messagesListView.scrollTo(messages.size() - 1);
             }
         } catch (Exception e) {
-            showError("خطا در دریافت پیام‌ها");
+            showError(e.getMessage() != null ? e.getMessage() : "خطا در دریافت پیام‌ها");
             e.printStackTrace();
         }
     }
@@ -83,7 +83,7 @@ public class ChatController {
             messageField.clear();
             loadMessages();
         } catch (Exception e) {
-            showError("خطا در ارسال پیام");
+            showError(e.getMessage() != null ? e.getMessage() : "خطا در ارسال پیام");
             e.printStackTrace();
         }
     }
